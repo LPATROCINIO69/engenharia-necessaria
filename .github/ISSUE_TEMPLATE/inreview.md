@@ -1,3 +1,11 @@
+---
+name: Registro de Item em Revisão
+about: Modelo para inclusão de tarefa que está em revisão
+title: "[IN REVIEW]"
+labels: ["in review"]
+assignees: []
+---
+
 ### 🔍 Em revisão/testes
 
 **O que foi entregue:**  

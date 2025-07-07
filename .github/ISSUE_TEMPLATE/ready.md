@@ -1,3 +1,11 @@
+---
+name: Registro de Itens prontos para desenvolvimento
+about: Modelo para inclusão de tarefas que estão prontas para o estágio de desenvolvimento 
+title: "[READY]"
+labels: ["ready"]
+assignees: []
+---
+
 ### 📋 Tarefa pronta para desenvolvimento
 
 **Objetivo técnico:** [ex: Implementar rota POST /register]

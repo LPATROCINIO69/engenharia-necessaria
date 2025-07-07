@@ -1,3 +1,11 @@
+---
+name: Registro de Item de Backlog
+about: Modelo para inclusão de item na lista de backlog
+title: "[BACKLOG]"
+labels: ["backlog"]
+assignees: []
+---
+
 ### 💡 Funcionalidade sugerida
 
 **Título:** [ex: Criar autenticação de usuários com JWT]

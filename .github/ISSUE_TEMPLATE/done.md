@@ -1,3 +1,11 @@
+---
+name: Tarefa concluída
+about: Modelo para registrar tarefas já finalizadas
+title: "[DONE]"
+labels: ["done"]
+assignees: []
+---
+
 ### ✅ Tarefa concluída
 
 **Título:** Criar conexão com MongoDB Atlas
