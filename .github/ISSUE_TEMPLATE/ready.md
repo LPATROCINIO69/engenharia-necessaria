@@ -1,5 +1,5 @@
 ---
-name: Registro de Itens prontos para desenvolvimento
+name: Registro de Itens prontos para desenvolvimento (READY)
 about: Modelo para inclusão de tarefas que estão prontas para o estágio de desenvolvimento 
 title: "[READY]"
 labels: ["ready"]

@@ -1,5 +1,5 @@
 ---
-name: Registro de Item In progress
+name: Registro de Item em desenvolvimento (In progress)
 about: Modelo para inclusão de tarefa que está sendo desenvolvida
 title: "[IN PROGRESS]"
 labels: ["in progress"]

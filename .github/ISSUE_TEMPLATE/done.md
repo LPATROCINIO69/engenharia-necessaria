@@ -1,5 +1,5 @@
 ---
-name: Tarefa concluída
+name: Registro de Tarefa concluída (DONE)
 about: Modelo para registrar tarefas já finalizadas
 title: "[DONE]"
 labels: ["done"]

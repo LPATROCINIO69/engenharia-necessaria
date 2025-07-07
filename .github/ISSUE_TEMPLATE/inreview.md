@@ -1,5 +1,5 @@
 ---
-name: Registro de Item em Revisão
+name: Registro de Item em Revisão (In Review)
 about: Modelo para inclusão de tarefa que está em revisão
 title: "[IN REVIEW]"
 labels: ["in review"]
