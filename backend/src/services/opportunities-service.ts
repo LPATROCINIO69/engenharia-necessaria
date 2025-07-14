@@ -1,12 +1,22 @@
+import { FieldEngineering } from "../domain/enums/fieldEngineering";
+import { TypeJob } from "../domain/enums/typeJob";
 import { findAllOpportunities } from "../repositories/opportunities-repository";
 import * as HttpResponse from "../utils/http-helper";
 
-export const getOpportunitiesService = async (typeJob:string, typeEngineering:string, jobLocation:string) =>{
+export const getOpportunitiesService = async (keyTypeJob?:string, keyTypeEngineering?:string, jobLocation?:string) =>{
     
+    let typeJob;
+    if (keyTypeJob && keyTypeJob in TypeJob) typeJob = TypeJob[keyTypeJob as keyof typeof TypeJob];
+        else typeJob = undefined;
+
+    let typeEngineering;
+    if (keyTypeEngineering && keyTypeEngineering in FieldEngineering) typeEngineering = FieldEngineering[keyTypeEngineering as keyof typeof FieldEngineering];
+        else typeEngineering = undefined;
+
     const data = await findAllOpportunities(typeJob,typeEngineering,jobLocation);
     let response = null;
 
-    if (data){
+    if (data.length >= 1){
         response = await HttpResponse.ok(data);
     } else {
         response = await HttpResponse.noContent();

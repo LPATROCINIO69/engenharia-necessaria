@@ -7,7 +7,7 @@ const router = Router();
 // TO DO:  desenvolver um controller para substituir a função de callback do GET.
 // Lista vagas por tipo={trainee, job}, modalidade {engenharia mecânica, engenharia civil, engenharia elétrica, etc.} 
 // e local {São Paulo, Brasília, Rio de Janeiro, etc.}.
-router.get("/opportunities/:typeJob/:engineering/:jobLocation", getOpportunities);    
+router.get("/opportunities", getOpportunities);    
 
 
 

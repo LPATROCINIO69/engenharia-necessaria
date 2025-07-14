@@ -1,6 +1,6 @@
 import { Opportunity } from "../models/opportunity-model";
-import { FieldEngineering as Engenharia} from "../domain/enums/fieldEngineering";
-import { TypeJob as TipoVaga } from "../domain/enums/typeJob";
+import { FieldEngineering as Engenharia, FieldEngineering} from "../domain/enums/fieldEngineering";
+import { TypeJob as TipoVaga, TypeJob } from "../domain/enums/typeJob";
 
 
 
@@ -57,6 +57,19 @@ const database:Opportunity[] = [
     ];
 
 
-export const findAllOpportunities= async (typeJob:string,typeEngineering:string,jobLocation:string):Promise<Opportunity[]>=>{
-    return database;
+export const findAllOpportunities= async (typeJob?:string,typeEngineering?:string,jobLocation?:string):Promise<Opportunity[]>=>{
+    let data:Opportunity[] = database;
+//    console.log(data);
+    if (typeJob){
+        data = data.filter(p => p.typeJob === typeJob);
+    }
+//    console.log(data);
+    if (typeEngineering){
+        data = data.filter(p=>p.typeEngineering===typeEngineering);
+    }
+//    console.log(data);
+    if (jobLocation){
+        data =data.filter(p=>p.jobLocation===jobLocation)
+    }
+    return data;
 }
