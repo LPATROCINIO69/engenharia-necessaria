@@ -1,9 +1,10 @@
+import { Types } from "mongoose";
 import { FieldEngineering } from "../domain/enums/fieldEngineering";
 import { TypeJob } from "../domain/enums/typeJob";
 
 
 export interface Opportunity {
-  id: number;
+  _id?: Types.ObjectId;
   title: string;
   description: string;
   typeEngineering: FieldEngineering;
@@ -12,6 +13,6 @@ export interface Opportunity {
   requirements:string;
   benefits:string;
   responsabilities:string;
-  data: string;
+  data?: Date;
   link: string;
 }

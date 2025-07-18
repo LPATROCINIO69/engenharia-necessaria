@@ -1,6 +1,7 @@
 import { FieldEngineering } from "../domain/enums/fieldEngineering";
 import { TypeJob } from "../domain/enums/typeJob";
-import { findAllOpportunities } from "../repositories/opportunities-repository";
+import { Opportunity as OpportunityModel } from "../models/opportunity-model";
+import { findAllOpportunities, insertOpportunity } from "../repositories/opportunities-repository";
 import * as HttpResponse from "../utils/http-helper";
 
 export const getOpportunitiesService = async (keyTypeJob?:string, keyTypeEngineering?:string, jobLocation?:string) =>{
@@ -22,4 +23,20 @@ export const getOpportunitiesService = async (keyTypeJob?:string, keyTypeEnginee
         response = await HttpResponse.noContent();
     }
     return response ;
+}
+
+export const createOpportunityService = async (opportunity:OpportunityModel)=>{
+    let response = null;
+    try{
+        if (opportunity) {
+            await insertOpportunity(opportunity);
+            response = await HttpResponse.created();
+        } else {
+            response = await HttpResponse.badRequest();
+        }
+    } catch(error){
+        console.error("Erro ao criar a oportunidade: ", error);
+        response = await HttpResponse.serverError();
+    }
+    return response;
 }

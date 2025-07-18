@@ -16,3 +16,7 @@ export const badRequest = async ():Promise<HttpResponse> =>{
 export const created = async ():Promise<HttpResponse> => {
     return {statusCode:201, body:{message:"successful"}};
 }
+
+export const serverError = async():Promise<HttpResponse> =>{
+    return {statusCode:500, body:{message:"Error inserting record into the database"}}
+}

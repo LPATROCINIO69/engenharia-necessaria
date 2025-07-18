@@ -1,9 +1,17 @@
 import express, {Request, Response} from "express";
 import createApp from "./app";
+import dotenv from "dotenv";
+import { connectDatabase } from "./config/database";
+
+dotenv.config();
 
 const app = createApp();
-const port = process.env.PORT;
+const port = process.env.PORT || 3000;
 
-app.listen(port, () => {
-    console.log(`🚨 Server ativo na porta http://localhost/${port}`);
+connectDatabase().then(() => {
+  app.listen(port, () => {
+    console.log(`✅ Server rodando em http://localhost:${port}`);
+  });
+}).catch((error) => {
+  console.error("❌ Falha ao conectar ao banco de dados:", error);
 });
