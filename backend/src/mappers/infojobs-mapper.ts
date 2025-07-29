@@ -1,4 +1,4 @@
-import { Opportunity } from "../models/opportunity-model";
+import { OpportunityModel } from "../models/opportunity-schema";
 
 
 // TO DO: verificar cada um desses campos. Alguns deles terão que ser definidos de outra forma.

@@ -1,13 +1,17 @@
 import { infojobsAdapter } from "../adapters/infojobs-adapter";
 import { infojobsMapper } from "../mappers/infojobs-mapper";
 import { insertOpportunity } from "../repositories/opportunities-repository";
-import { Opportunity } from "../models/opportunity-model";
+import { OpportunityModel } from "../models/opportunity-schema";
 
 
 export const scrapeInfojobs = async () =>{
-    const rawData = await infojobsAdapter();
-    const opportunities: Opportunity[] = await Promise.all(rawData.map(item=>infojobsMapper(item))); 
-    
-    opportunities.forEach((item)=>{insertOpportunity(item)});
+    const opportunities = await infojobsAdapter("engenheiro mecânico");   // EM TESTE
+//    const opportunities: OpportunityModel[] = await Promise.all(rawData.map(item=>infojobsMapper(item))); 
+    try{
+        await OpportunityModel.insertMany(opportunities);
+        
+    } catch(error){
+        console.error("Erro ao criar a oportunidade: ", error);
+    }
     return opportunities;
 };
