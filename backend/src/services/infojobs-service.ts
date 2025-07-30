@@ -5,13 +5,13 @@ import { OpportunityModel } from "../models/opportunity-schema";
 
 
 export const scrapeInfojobs = async () =>{
-    const opportunities = await infojobsAdapter("engenheiro mecânico");   // EM TESTE
+    const opportunities = await infojobsAdapter("Engenheiro Mecanico");   // EM TESTE
 //    const opportunities: OpportunityModel[] = await Promise.all(rawData.map(item=>infojobsMapper(item))); 
-    try{
+/*     try{
         await OpportunityModel.insertMany(opportunities);
         
     } catch(error){
         console.error("Erro ao criar a oportunidade: ", error);
-    }
+    } */
     return opportunities;
 };

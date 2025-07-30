@@ -1,43 +1,91 @@
+import puppeteer, { Browser } from "puppeteer";
+import { FieldEngineering } from "../domain/enums/fieldEngineering";
+import { TypeJob } from "../domain/enums/typeJob";
+import { Opportunity } from "../models/opportunity-model";
 
-import puppeteer from "puppeteer";
 
-export const infojobsAdapter = async (typeEngineering:string) =>{
-    const dataCollection: any[] = [];
+// busca o registro de vaga da página detalhada
+const searchOpportunity = async (typeEngineering: string, fullLink:string, browser:Browser):Promise<Opportunity|undefined> => {
+    const vagaPage = await browser.newPage();
 
-    // TODO: Construir a conversao de dados 
-    const searchUrl = `https://www.infojobs.com.br/empregos.aspx?palabra=${encodeURIComponent(typeEngineering)}`;
-    const baseUrl = "https://www.infojobs.com.br";
+     try {
+      await vagaPage.goto(fullLink, { waitUntil: "domcontentloaded", timeout: 60000 });
 
-    const browser = await puppeteer.launch({ headless: true });     
-    const page = await browser.newPage();
-    await page.setCacheEnabled(false);
-    await page.goto(searchUrl, { waitUntil: "domcontentloaded" });
-    
-    const vagas = await page.$$eval("div.card.js_rowCard", (cards, baseUrl) => {
-        return cards.map((card) => {
-            const container = card.querySelector(".js_cardLink");
+      const title = await vagaPage.$eval("h2.js_vacancyHeaderTitle", el => el.textContent?.trim() || "");
+      const jobLocation = await vagaPage.$eval(".text-medium.mb-4", el => el.textContent?.replace(/,?\s*km de você\./, '').trim() || "");
 
-            const title = container?.querySelector("h2")?.textContent?.trim() || "";
-            const company = container?.querySelector("a.text-body.text-decoration-none")?.textContent?.trim() || "";
-            const location = container?.querySelector(".small.text-medium.mr-24")?.textContent?.trim() || "";
-            const description = container?.querySelectorAll(".small.text-medium")?.[1]?.textContent?.trim() || "";
-            const relativeLink = container?.getAttribute("data-href") || "";
+      const descriptionParagraph = await vagaPage.$eval(
+        ".js_vacancyDataPanels p:nth-of-type(1)",
+        el => el.textContent?.trim() || ""
+      );
 
-            return {
-                title,
-                description,
-                typeEngineering: "Engenharia Mecanica",
-                typeJob: "job", // ou "ESTAGIO", conforme o contexto
-                jobLocation: location,
-                requirements: "A verificar",
-                benefits: "A verificar",
-                responsabilities: "A verificar",
-                link: baseUrl + relativeLink
-            };
-        });
-  }, baseUrl);
+      // Benefícios e Responsabilidades (extraídos do mesmo parágrafo)
+      const benefitsMatch = descriptionParagraph.match(/Benefícios:([\s\S]+)/);
+      const benefits = benefitsMatch ? benefitsMatch[1].trim() : "A verificar";
+      const responsabilities = benefitsMatch ? descriptionParagraph.split("Benefícios:")[0].trim() : descriptionParagraph;
 
-  dataCollection.push(...vagas);
+      // Requisitos
+      const requirements = await vagaPage.$$eval(".js_vacancyDataPanels .h4", (headers) => {
+        const exigenciasIndex = headers.findIndex(h => h.textContent?.includes("Exigências"));
+        if (exigenciasIndex !== -1) {
+          const list = headers[exigenciasIndex].nextElementSibling;
+          return list?.textContent?.trim() || "A verificar";
+        }
+        return "A verificar";
+      });
+
+      const inferredTypeJob = title.toLowerCase().includes("estágio") ? TypeJob.TRAINEE : TypeJob.JOB;
+
+      return {
+        title,
+        description: responsabilities,
+        typeEngineering: typeEngineering as FieldEngineering,
+        typeJob: inferredTypeJob,
+        jobLocation,
+        requirements,
+        benefits,
+        responsabilities,
+        data: new Date(), //.toLocaleDateString(),
+        link: fullLink
+      };
+
+    } catch (error) {
+        console.error(`❌ Erro ao processar a vaga ${fullLink}:`, error);
+        return undefined;
+    } finally{
+        await vagaPage.close();  
+    }
+     
+}
+
+// Busca a lista de vagas para o tipo de engenharia solicitada inicialmente
+export const infojobsAdapter = async (typeEngineering: string): Promise<Opportunity[]> => {
+  const dataCollection: Opportunity[] = [];
+
+  const searchUrl = `https://www.infojobs.com.br/empregos.aspx?palabra=${encodeURIComponent(typeEngineering)}`;
+  const baseUrl = "https://www.infojobs.com.br";
+
+  const browser = await puppeteer.launch({ headless: true });
+  const page = await browser.newPage();
+  await page.setCacheEnabled(false);
+  await page.goto(searchUrl, { waitUntil: "domcontentloaded", timeout: 60000 });
+
+  console.log(`😊 Página principal: ${searchUrl} `);
+
+  // Captura os links das vagas da lista principal
+  const links = await page.$$eval("div.card.js_rowCard .js_cardLink", cards =>
+    cards
+      .map(card => card.getAttribute("data-href"))
+      .filter(href => !!href) as string[]
+  );
+
+  // Para cada link de vaga individual
+  for (const relativeLink of links) {
+    const fullLink = baseUrl + relativeLink;
+    console.log(`😊 Página detalhada: ${fullLink} `);
+    let oneOpportunity:Opportunity|undefined = await searchOpportunity(typeEngineering,fullLink,browser);
+    if (oneOpportunity) dataCollection.push(oneOpportunity);
+  }
 
   await browser.close();
   return dataCollection;
