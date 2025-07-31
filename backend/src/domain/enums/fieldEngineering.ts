@@ -1,6 +1,6 @@
 export enum FieldEngineering {
   Civil = "Engenharia Civil",
-  Mecanica = "Engenharia Mecanica",
+  Mecanica = "Engenharia Mecanica" ,
   Eletrica = "Engenharia Eletrica",
   Eletronica = "Engenharia Eletronica",
   Producao = "Engenharia de Producao",
@@ -17,5 +17,5 @@ export enum FieldEngineering {
   Aeronautica = "Engenharia Aeronautica",
   Nuclear = "Engenharia Nuclear",
   Materiais = "Engenharia de Materiais",
-  Sanitaria = "Engenharia Sanitaria"
+  Sanitaria = "Engenharia Sanitaria" 
 }

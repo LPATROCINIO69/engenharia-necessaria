@@ -1,3 +1,4 @@
+import { Opportunity } from "../models/opportunity-model";
 import { OpportunityModel } from "../models/opportunity-schema";
 
 

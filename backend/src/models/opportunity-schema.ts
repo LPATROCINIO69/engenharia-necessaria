@@ -23,7 +23,7 @@ const OpportunitySchema = new Schema<OpportunityDocument>({
   benefits: String,
   responsabilities: String,
   data: { type: Date, default: Date.now },
-  link: String
+  link: { type: String, required:true, unique:true}
 });
 
 export const OpportunityModel = model<OpportunityDocument>("Opportunity", OpportunitySchema);
