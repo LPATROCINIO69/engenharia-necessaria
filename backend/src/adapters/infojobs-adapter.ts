@@ -74,9 +74,9 @@ const searchOpportunity = async (typeEngineering: string, fullLink: string, vaga
 export const infojobsAdapter = async (typeEngineering: string): Promise<Opportunity[]> => {
   const dataCollection: Opportunity[] = [];
 
-  // estabelece tipo de contrato: 2 - "Efetivo - CLT" e 4 - "Estágio"
-  const contrato: string = "2,4";
-  const searchUrl = `https://www.infojobs.com.br/empregos.aspx?palabra=${encodeURIComponent(typeEngineering)}&tipocontrato=${contrato}`;
+  const contrato: string = "2,4";   // estabelece tipo de contrato: 2 - "Efetivo - CLT" e 4 - "Estágio"
+  const estadoBrasil: string = "172";     // restringe a pesquisa ao estado brasileiro do "Espírito Santo"
+  const searchUrl = `https://www.infojobs.com.br/empregos.aspx?palabra=${encodeURIComponent(typeEngineering)}&provincia=${estadoBrasil}&tipocontrato=${contrato}`;
   const baseUrl = "https://www.infojobs.com.br";
 
   const browser = await puppeteer.launch({ headless: true });
