@@ -1,8 +1,7 @@
 import puppeteer, { Browser, Page } from "puppeteer";
-import { FieldEngineering } from "../domain/enums/fieldEngineering";
 import { TypeJob } from "../domain/enums/typeJob";
 import { Opportunity } from "../models/opportunity-model";
-import {mapToFieldEngineering} from "../mappers/fieldEngineerMapper";
+import { mapToFieldEngineering } from "../mappers/fieldEngineerMapper";
 
 // definição da função sleep
 const sleep = (ms: number) => new Promise(resolve => setTimeout(resolve, ms));
@@ -75,44 +74,72 @@ export const infojobsAdapter = async (typeEngineering: string): Promise<Opportun
   const dataCollection: Opportunity[] = [];
 
   const contrato: string = "2,4";   // estabelece tipo de contrato: 2 - "Efetivo - CLT" e 4 - "Estágio"
-  const estadoBrasil: string = "172";     // restringe a pesquisa ao estado brasileiro do "Espírito Santo"
+  const estadoBrasil: string = "64";     // restringe a pesquisa ao estado brasileiro do "Espírito Santo (172), Rio de Janeiro(182), São Paulo(64)"
   const searchUrl = `https://www.infojobs.com.br/empregos.aspx?palabra=${encodeURIComponent(typeEngineering)}&provincia=${estadoBrasil}&tipocontrato=${contrato}`;
   const baseUrl = "https://www.infojobs.com.br";
+  let browser: Browser|undefined;
 
-  const browser = await puppeteer.launch({ headless: true });
-  const page = await browser.newPage();
-  await page.setCacheEnabled(false);
-  await page.setUserAgent("Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36");
-  await page.goto(searchUrl, { waitUntil: "domcontentloaded", timeout: 60000 });
+  try {
+    browser = await puppeteer.launch({
+      headless: true,
+      args: [
+        '--disable-features=MediaStream',
+        '--use-fake-ui-for-media-stream',
+        '--no-sandbox',
+        '--disable-setuid-sandbox'
+      ]
+    });
+    const context = await browser.createBrowserContext(); // cria uma navegação anômina e sem cookies
+    const page = await context.newPage();
 
-  console.log(`😊 Página principal: ${searchUrl} `);
+    await page.evaluateOnNewDocument(() => {
+      Object.defineProperty(navigator, 'mediaDevices', {
+        value: undefined, // Remove a API completamente
+      });
+    });
 
-  // Captura os links das vagas da lista principal
-  const links = await page.$$eval("div.card.js_rowCard .js_cardLink", cards =>
-    cards
-      .map(card => card.getAttribute("data-href"))
-      .filter(href => !!href) as string[]
-  );
+    await page.setCacheEnabled(false);
+    await page.setUserAgent("Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36");
+    await page.goto(searchUrl, { waitUntil: "domcontentloaded", timeout: 60000 });
 
-  // Para cada link de vaga individual
+    console.log(`😊 Página principal: ${searchUrl} `);
 
-  for (const relativeLink of links) {
-    const fullLink = baseUrl + relativeLink;
-    const vagaPage = await browser.newPage();
-    console.log(`😊 Página detalhada: ${fullLink} `);
-    try {
-      const oneOpportunity: Opportunity | undefined = await searchOpportunity(typeEngineering, fullLink, vagaPage);
-      if (oneOpportunity) dataCollection.push(oneOpportunity);
-    } catch (err) {
-      // ✅ Pausa entre uma vaga e outra
-      console.error("Erro ao processar vaga:", fullLink, err);
-    } finally {
-      await vagaPage.close();
-      //      await sleep(1000);
+    // Captura os links das vagas da lista principal
+    const links = await page.$$eval("div.card.js_rowCard .js_cardLink", cards =>
+      cards
+        .map(card => card.getAttribute("data-href"))
+        .filter(href => !!href) as string[]
+    );
+
+    await page.close();
+    
+    // Constrói um conjunto (set) de links (para evitar repetição)
+    const processedLinks: Set<string> = new Set<string>();
+    for (const relativeLink of links) processedLinks.add(baseUrl + relativeLink);
+      
+    
+
+    // Para cada link de vaga individual
+
+    for (const fullLink of processedLinks) {
+      const vagaPage = await context.newPage();
+      console.log(`😊 Página detalhada: ${fullLink} `);
+      try {
+        const oneOpportunity: Opportunity | undefined = await searchOpportunity(typeEngineering, fullLink, vagaPage);
+        if (oneOpportunity) dataCollection.push(oneOpportunity);
+      } catch (err) {
+        // ✅ Pausa entre uma vaga e outra
+        console.error("Erro ao processar vaga:", fullLink, err);
+      } finally {
+        await vagaPage.close();
+        await sleep(500);
+      }
+
     }
-
+  } catch (err) {
+    console.error("Erro ao acessar o navegador:", err);
+  } finally {
+    if(browser) await browser.close();
   }
-
-  await browser.close();
   return dataCollection;
 };
