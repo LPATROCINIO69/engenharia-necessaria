@@ -74,7 +74,7 @@ export const infojobsAdapter = async (typeEngineering: string): Promise<Opportun
   const dataCollection: Opportunity[] = [];
 
   const contrato: string = "2,4";   // estabelece tipo de contrato: 2 - "Efetivo - CLT" e 4 - "Estágio"
-  const estadoBrasil: string = "64";     // restringe a pesquisa ao estado brasileiro do "Espírito Santo (172), Rio de Janeiro(182), São Paulo(64)"
+  const estadoBrasil: string = "";     // restringe a pesquisa ao estado brasileiro do "Espírito Santo (172), Rio de Janeiro(182), São Paulo(64)"
   const searchUrl = `https://www.infojobs.com.br/empregos.aspx?palabra=${encodeURIComponent(typeEngineering)}&provincia=${estadoBrasil}&tipocontrato=${contrato}`;
   const baseUrl = "https://www.infojobs.com.br";
   let browser: Browser|undefined;
