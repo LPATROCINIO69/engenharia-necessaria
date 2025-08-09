@@ -1,22 +1,22 @@
-import { Button } from "./components/Button";
-import { Input } from "./components/Input";
-import {Logo} from "./components/Logo";
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { Login } from "./pages/Login";
+import { CadastroUsuario } from "./pages/CadastroUsuario";
+import { Oportunidades } from './pages/Oportunidades';
 
 function App() {
   return (
-    // <div>
-    //   <Logo></Logo>
-    //   <h1>Bem-vindo ao Sistema de Oportunidades</h1>
-    //   <Button>Teste</Button>
-    //   <Input
-    //       label="E-mail"
-    //       type="email"
-    //       placeholder="armando.lero@gmail.com"
-    //       required
-    //     />
-    // </div>
-    <Login />
+    
+    <Router>
+      <Routes>
+        {/* Rota inicial - tela de Login */}
+        <Route path="/" element={<Login />} />
+        
+        {/* Rota para tela de cadastro de usuário */}
+        <Route path="/cadastrousuario" element={<CadastroUsuario />} />
+        <Route path="/oportunidades" element ={<Oportunidades />} />
+      </Routes>
+    </Router>
+    
   );
 }
 

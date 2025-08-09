@@ -1,9 +1,12 @@
 import React,{useState} from "react";
-import { Logo } from "../components/Logo";
+//import { Logo } from "../components/Logo";
 import { Input } from "../components/Input";
 import { Button } from "../components/Button";
+import { HeaderPage } from "../components/HeaderPage";
 
 import '../styles/Login.css';
+import { Link } from "react-router-dom";
+
 
 
 export function Login(){
@@ -18,10 +21,11 @@ export function Login(){
 
     return(
         <div className="login-container">
-            <header className="login-header">
+            {/* <header className="login-header">
                 <Logo />
                 <h1>Engenharia Necessária</h1>
-            </header>
+            </header> */}
+            <HeaderPage />
 
             <form onSubmit={handleSubmit} className="login-form">
                 <h2>Login</h2>
@@ -47,7 +51,7 @@ export function Login(){
 
             </form>
             <footer className="login-footer">
-                Não tem uma conta? <a href="#">Cadastre-se</a>
+                Não tem uma conta? <Link to="/cadastrousuario">Cadastre-se</Link>
             </footer>
 
         </div>
