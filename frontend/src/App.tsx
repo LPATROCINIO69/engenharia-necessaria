@@ -2,6 +2,7 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { Login } from "./pages/Login";
 import { CadastroUsuario } from "./pages/CadastroUsuario";
 import { Oportunidades } from './pages/Oportunidades';
+import { OportunidadeDetalhe } from './pages/OportunidadeDetalhe';
 
 function App() {
   return (
@@ -14,6 +15,7 @@ function App() {
         {/* Rota para tela de cadastro de usuário */}
         <Route path="/cadastrousuario" element={<CadastroUsuario />} />
         <Route path="/oportunidades" element ={<Oportunidades />} />
+        <Route path="/detalhe" element ={<OportunidadeDetalhe />} />
       </Routes>
     </Router>
     

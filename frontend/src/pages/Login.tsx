@@ -1,30 +1,30 @@
 import React,{useState} from "react";
-//import { Logo } from "../components/Logo";
+
 import { Input } from "../components/Input";
 import { Button } from "../components/Button";
 import { HeaderPage } from "../components/HeaderPage";
 
 import '../styles/Login.css';
-import { Link } from "react-router-dom";
+import { Link,useNavigate } from "react-router-dom";
 
 
 
 export function Login(){
     const [email, setEmail]= useState('');
     const [senha, setSenha]= useState('');
+    const navigate = useNavigate();
 
     const handleSubmit = (e:React.FormEvent) =>{
-        e.preventDefault();
+        e.preventDefault();        
+        navigate('/oportunidades');
+
         // TO DO: chamar o serviço de autenticação para continuar a abertura do sistema
         console.log("Login com:  ", email, senha);
     };
 
     return(
         <div className="login-container">
-            {/* <header className="login-header">
-                <Logo />
-                <h1>Engenharia Necessária</h1>
-            </header> */}
+            
             <HeaderPage />
 
             <form onSubmit={handleSubmit} className="login-form">

@@ -1,0 +1,46 @@
+.listbox-label{
+    display: flex;
+    flex-direction: column;
+    font-weight: 600;
+    font-size: 1rem;
+    text-align: left;
+    color: #222;
+    margin-top: 25px;
+}
+
+.listbox-container {
+  position: relative;
+  text-align: left;
+  font-size: 1rem;
+  width: 100%;
+  border: 1px solid #222;
+  border-radius: 8px;
+  background: white;
+  margin-top: 10px;
+  outline-offset: 2px;
+  outline-color: #5555cc;
+}
+
+.listbox-selected {
+  padding: 0.5rem;
+  cursor: pointer;
+}
+
+.listbox-options {
+  position: relative;
+  width: 100%;
+}
+
+.listbox-item {
+  padding: 0.5rem;
+  cursor: pointer;
+}
+
+.listbox-item:hover {
+  background: #f0f0f0;
+}
+
+.listbox-item.ativo {
+  background: #e0e0ff;
+}
+

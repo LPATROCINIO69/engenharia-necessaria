@@ -1,45 +1,66 @@
-import { Input } from "../components/Input";
+
+import { useNavigate } from "react-router-dom";
 import { Button } from "../components/Button";
 import { HeaderPage } from "../components/HeaderPage";
+import { ListBoxCustom } from "../components/ListBoxCustom";
+import { TipoTrabalhoSelector } from "../components/TipoTrabalhoSeletor";
 
 import '../styles/Oportunidades.css';
 
 
 
-export function Oportunidades(){
-   
+export function Oportunidades() {
+    const navigate = useNavigate();
+
     
-    return(
-        <div className="usuario-container">
+    // TO DO: Resgatar conteúdos para as LISTBOX
+    const cidades = ["São Paulo - SP", "Rio de Janeiro - RJ", "Curitiba - PR"];
+    const engenharias = ["Engenharia Mecânica", "Engenharia Civil", "Engenharia Elétrica"];
+
+    const vagas = [
+        { titulo: "Engenheiro Civil", empresa: "Construtora Catanduva", local: "São Paulo - SP" },
+        { titulo: "Supervisor Geral", empresa: "Alias Arquitetura", local: "São Bernardo - SP" },
+        { titulo: "Arquiteto", empresa: "Beta Engenharia", local: "Curitiba - PR" },
+        { titulo: "Técnico de Obras", empresa: "Construtora Delta", local: "Campinas - SP" }
+    ];
+
+
+
+    return (
+        <div className="oportunidades-container">
             <HeaderPage />
+            <h2>Oportunidades</h2>
 
-            <form className="usuario-form">
-                <h2>Cadastrar Usuário</h2>
-                <Input 
-                    label="Nome"
-                    type="text"
-                    placeholder="nome do usuário"
-                />
-                <Input 
-                    label="E-mail"
-                    type ="email"
-                    placeholder="nome_usuario@endereco.com"
-                    required
-                />
-
-                <Input 
-                    label="Senha"
-                    type="password"
-                    placeholder="***********"
-                />
+            <ListBoxCustom
+                dados={engenharias}
+                renderItem={(item) => <span>{item}</span>}
+                label="Campo da Engenharia"
                 
-                <Button type ="submit">Cadastrar</Button>
-                
+            />
 
-            </form>
-            
+            <ListBoxCustom
+                dados={cidades}
+                renderItem={(item) => <span>{item}</span>}
+                label="Local de atuação"
+            />
 
-        </div>
+            <TipoTrabalhoSelector />
+
+            <ListBoxCustom
+                dados={vagas}
+                renderItem={(vaga) => <span>
+                    <strong>{vaga.titulo}</strong><br />
+                    {vaga.empresa}<br />
+                    {vaga.local}</span>}
+                maxVisibleItems={3}
+                onItemDoubleClick={()=> navigate('/detalhe')}
+            />
+
+
+            <Button type="submit">Divulgar Oportunidades</Button>
+
+
+        </div >
 
 
     );
