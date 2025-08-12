@@ -1,0 +1,20 @@
+label{
+    display: flex;
+    flex-direction: column;
+    font-weight: 600;
+    font-size: 1rem;
+    text-align: left;
+    color: #222;
+}
+
+.text-view-editable, .text-view {
+    margin-top: 6px;
+    border-radius: 8px;
+    border:1px solid #222;
+    font-size: 1rem;
+    outline-offset: 2px;
+    outline-color: #5555cc;
+    text-align: justify;
+    padding: 15px;
+}
+

@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-
+import "../styles/TextViewCustom.css";
 
 interface TextViewCustomProps {
     text: string;
@@ -63,7 +63,6 @@ export function TextViewCustom({
                     width,
                     overflowY: "auto",
                     whiteSpace: "pre-wrap",
-                    padding: 8,
                     border: "1px solid #ccc",
                     borderRadius: 4,
                     backgroundColor: "#fafafa",
