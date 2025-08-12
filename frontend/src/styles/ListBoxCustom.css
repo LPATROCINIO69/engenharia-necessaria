@@ -1,14 +1,16 @@
 .listbox-label{
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
     font-weight: 600;
     font-size: 1rem;
     text-align: left;
     color: #222;
-    margin-top: 25px;
+    margin-top: 10px;
 }
 
 .listbox-container {
+  display: flex;
+  flex-direction: row;
   position: relative;
   text-align: left;
   font-size: 1rem;
@@ -16,7 +18,7 @@
   border: 1px solid #222;
   border-radius: 8px;
   background: white;
-  margin-top: 10px;
+  margin-top: 5px;
   outline-offset: 2px;
   outline-color: #5555cc;
 }

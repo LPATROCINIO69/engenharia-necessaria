@@ -1,5 +1,5 @@
 import { useState } from "react";
-import "../styles/TipoTrabalhoSelector.css";
+import "../styles/TipoTrabalhoSelector.css"; // arquivo css isolado
 
 export function TipoTrabalhoSelector() {
   const [tipo, setTipo] = useState("estagio");
@@ -14,7 +14,7 @@ export function TipoTrabalhoSelector() {
           checked={tipo === "estagio"}
           onChange={(e) => setTipo(e.target.value)}
         />
-        Estágio
+        <span>Estágio</span>
       </label>
 
       <label>
@@ -25,7 +25,7 @@ export function TipoTrabalhoSelector() {
           checked={tipo === "efetivo"}
           onChange={(e) => setTipo(e.target.value)}
         />
-        Efetivo
+        <span>Efetivo</span>
       </label>
     </div>
   );

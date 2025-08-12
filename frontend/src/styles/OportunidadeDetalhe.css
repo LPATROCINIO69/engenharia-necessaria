@@ -1,0 +1,21 @@
+.detalhe-container{
+    max-width: 320px;
+    margin:0 auto;
+    padding: 24px 12px;
+    font-family: Arial, Helvetica, sans-serif;
+    color: #222;
+    text-align: center;
+}
+
+.detalhe-form h2{
+    font-size:2rem;
+    font-weight: bold;
+    margin-bottom: 16px;
+}
+
+.detalhe-form{
+    display:flex;
+    flex-direction: column;
+    gap:14px;
+}
+

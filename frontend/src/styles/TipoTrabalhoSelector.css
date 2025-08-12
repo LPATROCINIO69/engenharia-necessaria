@@ -1,7 +1,27 @@
-
+/* Container dos dois radios */
 .tipo-trabalho {
-  margin-top:20px;
-  flex-direction: row;  
-  display: flex;  
-  gap:40px
+  display: flex;
+  flex-direction: row;
+  gap: 20px; /* espaço entre Estágio e Efetivo */
+  align-items: center;
+}
+
+/* Cada label com input + texto alinhados */
+.tipo-trabalho label {
+  all: unset;
+  display: flex;
+  align-items: center;
+  gap: 6px; /* espaço entre o círculo e o texto */
+  cursor: pointer;
+}
+
+/* Garante que radios não sejam afetados por estilos globais */
+.tipo-trabalho input[type="radio"] {
+  display: inline-block !important;
+  width: auto !important;
+  height: auto !important;
+  margin: 10px;
+  padding: 0;
+  appearance: radio;
+  -webkit-appearance: radio;
 }

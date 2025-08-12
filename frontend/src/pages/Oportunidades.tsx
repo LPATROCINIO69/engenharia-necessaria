@@ -12,7 +12,15 @@ import '../styles/Oportunidades.css';
 export function Oportunidades() {
     const navigate = useNavigate();
 
-    
+    const handleSubmit = (e: React.FormEvent) => {
+        e.preventDefault();
+        navigate('/divulgar');
+        // Teste de link
+
+    };
+
+
+
     // TO DO: Resgatar conteúdos para as LISTBOX
     const cidades = ["São Paulo - SP", "Rio de Janeiro - RJ", "Curitiba - PR"];
     const engenharias = ["Engenharia Mecânica", "Engenharia Civil", "Engenharia Elétrica"];
@@ -29,36 +37,36 @@ export function Oportunidades() {
     return (
         <div className="oportunidades-container">
             <HeaderPage />
-            <h2>Oportunidades</h2>
+            <form onSubmit={handleSubmit} className="oportunidades-form">
+                <h2>Oportunidades</h2>
 
-            <ListBoxCustom
-                dados={engenharias}
-                renderItem={(item) => <span>{item}</span>}
-                label="Campo da Engenharia"
-                
-            />
+                <ListBoxCustom
+                    dados={engenharias}
+                    renderItem={(item) => <span>{item}</span>}
+                    label="Campo da Engenharia"
+                />
 
-            <ListBoxCustom
-                dados={cidades}
-                renderItem={(item) => <span>{item}</span>}
-                label="Local de atuação"
-            />
+                <ListBoxCustom
+                    dados={cidades}
+                    renderItem={(item) => <span>{item}</span>}
+                    label="Local de atuação"
+                />
 
-            <TipoTrabalhoSelector />
+                <TipoTrabalhoSelector />
 
-            <ListBoxCustom
-                dados={vagas}
-                renderItem={(vaga) => <span>
-                    <strong>{vaga.titulo}</strong><br />
-                    {vaga.empresa}<br />
-                    {vaga.local}</span>}
-                maxVisibleItems={3}
-                onItemDoubleClick={()=> navigate('/detalhe')}
-            />
+                <ListBoxCustom
+                    dados={vagas}
+                    renderItem={(vaga) => <span>
+                        <strong>{vaga.titulo}</strong><br />
+                        {vaga.empresa}<br />
+                        {vaga.local}</span>}
+                    maxVisibleItems={3}
+                    onItemDoubleClick={() => navigate('/detalhe')}
+                />
 
 
-            <Button type="submit">Divulgar Oportunidades</Button>
-
+                <Button type="submit">Divulgar Oportunidades</Button>
+            </form>
 
         </div >
 

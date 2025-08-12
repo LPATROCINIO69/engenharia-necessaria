@@ -15,7 +15,7 @@ export function CadastroUsuario(){
         navigate('/');
 
         // TO DO: chamar o serviço de autenticação para continuar a abertura do sistema
-//      console.log("Login com:  ", email, senha);
+
     };
 
     
