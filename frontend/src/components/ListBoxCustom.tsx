@@ -19,10 +19,16 @@ export function ListBoxCustom<T>({
     const [selecionado, setSelecionado] = useState<number | null>(null);
     const [aberto, setAberto] = useState(false);
 
-    const containerStyle: CSSProperties =
+    // const containerStyle: CSSProperties =
+    //     maxVisibleItems === 1
+    //         ? { maxHeight: "3.0rem", overflowY: "auto" }
+    //         : { maxHeight: `${maxVisibleItems * 4.5}rem`, overflowY: "auto" };
+
+     const containerStyle: CSSProperties = 
         maxVisibleItems === 1
-            ? { maxHeight: "3.0rem", overflowY: "auto" }
-            : { maxHeight: `${maxVisibleItems * 4.5}rem`, overflowY: "auto" };
+             ? { height: "2.5rem", overflowY: "auto",position: "relative" }
+             : { height: `${maxVisibleItems * 4.5}rem`, overflowY: "auto",position: "relative" };
+    
 
     return (
         <div>
@@ -75,3 +81,4 @@ export function ListBoxCustom<T>({
         </div>
     );
 }
+
