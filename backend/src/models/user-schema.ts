@@ -1,6 +1,17 @@
 import { Schema, model } from "mongoose";
 import bcrypt from 'bcryptjs';
 
+
+export interface IUser extends Document {
+    name: string;
+    email: string;
+    password?: string;
+    createdAt: Date;
+    comparePassword(candidatePassword: string): Promise<boolean>;
+}
+
+
+
 const UserSchema = new Schema({
     name: {
         type:  String,
@@ -19,7 +30,7 @@ const UserSchema = new Schema({
         type: String,
         required: true,
         select: false,
-        minlenght: 6
+        minlength: 6
     },
     createdAt: {
         type: Date,
@@ -29,13 +40,15 @@ const UserSchema = new Schema({
 
 // Hash da senha antes de salvar
 UserSchema.pre("save", async function(next){
-    if (!this.isModified('password')) return;
+    if (!this.isModified('password')) return next();
     this.password = await bcrypt.hash(this.password,10);
+    next();
 })
 
 // Método para comparar senhas
-UserSchema.methods.comparePassword = async function(candidatePassword:string){
+UserSchema.methods.comparePassword = async function(candidatePassword:string):Promise<boolean>{
     return await bcrypt.compare(candidatePassword,this.password);
 }
 
-module.exports = model('User', UserSchema);
+
+export default model<IUser>("User", UserSchema);

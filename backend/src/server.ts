@@ -1,4 +1,3 @@
-import express, {Request, Response} from "express";
 import createApp from "./app";
 import dotenv from "dotenv";
 import { connectDatabase } from "./config/database";
