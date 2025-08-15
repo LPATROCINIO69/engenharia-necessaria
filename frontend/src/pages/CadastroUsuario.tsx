@@ -1,7 +1,6 @@
 import { Input } from "../components/Input";
 import { Button } from "../components/Button";
 import { HeaderPage } from "../components/HeaderPage";
-import { useNavigate } from "react-router-dom";
 import { useAuth } from "../hooks/useAuth.ts";
 
 
@@ -17,7 +16,6 @@ export function CadastroUsuario(){
     const {loading, error, handleRegister} = useAuth();
 
 
-    const navigate = useNavigate();
 
     const handleSubmit = (e:React.FormEvent) =>{
         e.preventDefault();        

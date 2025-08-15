@@ -20,8 +20,32 @@ export const registerUser = async (userData: UserRegistrationData): Promise<Auth
 
         return { success: true };
 
-    } catch (error:any) {
+    } catch (error) {
         console.error("Erro no cadastro:", error);
+        return { success: false, error: error instanceof Error ? error.message : 'Erro desconhecido' };
+    }
+}
+
+export const validaUser = async (userData: UserRegistrationData): Promise<AuthResponse> => {
+    try {
+        const response = await fetch(apiConfig.login, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(userData)
+        });
+
+        const data = await response.json();
+
+        if (!response.ok) {
+            throw new Error(data.error || 'Registration failure.')
+        }
+
+        return { success: true };
+
+    } catch(error) {
+        console.error("Erro no validação do login:", error);
         return { success: false, error: error instanceof Error ? error.message : 'Erro desconhecido' };
     }
 }

@@ -5,21 +5,21 @@ import { Button } from "../components/Button";
 import { HeaderPage } from "../components/HeaderPage";
 
 import '../styles/Login.css';
-import { Link,useNavigate } from "react-router-dom";
+import { Link} from "react-router-dom";
+import { useLogin } from "../hooks/useLogin";
 
 
 
 export function Login(){
     const [email, setEmail]= useState('');
-    const [senha, setSenha]= useState('');
-    const navigate = useNavigate();
+    const [password, setPassword]= useState('');
+    const {loading, error, handleRegister} = useLogin();
+    
 
     const handleSubmit = (e:React.FormEvent) =>{
         e.preventDefault();        
-        navigate('/oportunidades');
+         handleRegister({  email, password });      
 
-        // TO DO: chamar o serviço de autenticação para continuar a abertura do sistema
-        console.log("Login com:  ", email, senha);
     };
 
     return(
@@ -28,6 +28,7 @@ export function Login(){
             <HeaderPage />
 
             <form onSubmit={handleSubmit} className="login-form">
+                {error && <div className="alert alert-danger">{error}</div>}
                 <h2>Login</h2>
                 <Input 
                     label="E-mail"
@@ -42,11 +43,12 @@ export function Login(){
                     label="Senha"
                     type="password"
                     placeholder="***********"
-                    value={senha}
-                    onChange={e => setSenha(e.target.value)}
+                     minLength={6}
+                    value={password}
+                    onChange={e => setPassword(e.target.value)}
                 />
                 
-                <Button type ="submit">Entrar</Button>
+                <Button type ="submit" disabled={loading}>{loading ? 'Entrando...' : 'Entrar'}</Button>
                 <a href ="#" className="login-forgot">Esqueceu sua senha?</a>
 
             </form>
@@ -61,3 +63,5 @@ export function Login(){
 
 
 }
+
+
