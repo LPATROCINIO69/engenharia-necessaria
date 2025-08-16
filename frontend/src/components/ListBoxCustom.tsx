@@ -1,85 +1,104 @@
-import React, { type CSSProperties, useState } from "react";
+
+
+import React, { type CSSProperties, useState, useEffect, useRef } from "react";
 import "../styles/ListBoxCustom.css";
 
 interface ListBoxCustomProps<T> {
-    dados: T[] ;
-    renderItem: (item: T) => React.ReactNode;
-    maxVisibleItems?: number; // quantos itens ficam visíveis
-    label?: string;
-    onItemDoubleClick?: (item: T) => void;
-    onChange?: (item: T) => void;
+  dados: T[];
+  renderItem: (item: T) => React.ReactNode;
+  maxVisibleItems?: number;
+  label?: string;
+  placeholder?: string;
+  onItemDoubleClick?: (item: T) => void;
+  onChange?: (item: T) => void;
 }
 
 export function ListBoxCustom<T>({
-    dados,
-    renderItem,
-    maxVisibleItems = 1,
-    label,
-    onItemDoubleClick,
-    onChange
+  dados,
+  renderItem,
+  maxVisibleItems = 1,
+  label,
+  placeholder = "Selecione...",
+  onItemDoubleClick,
+  onChange,
 }: ListBoxCustomProps<T>) {
-    const [selecionado, setSelecionado] = useState<number | null>(null);
-    const [aberto, setAberto] = useState(false);
+  const [selecionado, setSelecionado] = useState<number | null>(null);
+  const [aberto, setAberto] = useState(false);
 
-    const containerStyle: CSSProperties = 
-        maxVisibleItems === 1
-             ? { height: "2.5rem", overflowY: "auto",position: "relative" }
-             : { height: `${maxVisibleItems * 4.5}rem`, overflowY: "auto",position: "relative" };
-    
+  const containerRef = useRef<HTMLDivElement>(null);
 
-    return (
-        <div>
-            {label && <label className="listbox-label">{label}</label>}
-            <div className="listbox-container" style={containerStyle}>
-                {maxVisibleItems === 1 ? (
-                    <>
+  // Fecha a dropdown se clicar fora
+  useEffect(() => {
+    function handleClickOutside(event: MouseEvent) {
+      if (containerRef.current && !containerRef.current.contains(event.target as Node)) {
+        setAberto(false);
+      }
+    }
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
+  }, []);
 
-                        <div
-                            className="listbox-selected"
-                            onClick={() => setAberto(!aberto)}
-                        >
-                            {selecionado !== null
-                                ? renderItem(dados[selecionado])
-                                : "Selecione..."}
-                        </div>
-                        {aberto && (
-                            <div className="listbox-options">
-                                {dados.map((item, index) => (
-                                    <div
-                                        key={index}
-                                        className={`listbox-item ${selecionado === index ? "ativo" : ""}`}
-                                        onClick={() => {
-                                            setSelecionado(index);
-                                            setAberto(false);
-                                            if (onChange) onChange(item);
-                                        }}
-                                    >
-                                        {renderItem(item)}
-                                    </div>
-                                ))}
-                            </div>
-                        )}
-                    </>
-                ) : (
-                    // Lista expandida
-                    <div className="listbox-options">
-                        {dados.map((item, index) => (
-                            <div
-                                key={index}
-                                className={`listbox-item ${selecionado === index ? "ativo" : ""}`}
-                                onClick={() => {
-                                    setSelecionado(index)
-                                    if (onChange) onChange(item);
-                                }}
-                                onDoubleClick={() => onItemDoubleClick && onItemDoubleClick(item)}
-                            >
-                                {renderItem(item)}
-                            </div>
-                        ))}
-                    </div>
-                )}
+  return (
+    <div className="listbox-wrapper" ref={containerRef}>
+      {label && <label className="listbox-label">{label}</label>}
+
+      {/* Caso 1: Dropdown */}
+      {maxVisibleItems === 1 ? (
+        <div className="listbox-container" style={{ position: "relative" }}>
+          <div
+            className="listbox-selected"
+            onClick={() => setAberto(!aberto)}
+            role="button"
+            aria-haspopup="listbox"
+          >
+            {selecionado !== null ? renderItem(dados[selecionado]) : placeholder}
+          </div>
+          {aberto && (
+            <div className="listbox-options dropdown">
+              {dados.map((item, index) => (
+                <div
+                  key={index}
+                  className={`listbox-item ${selecionado === index ? "ativo" : ""}`}
+                  role="option"
+                  aria-selected={selecionado === index}
+                  onClick={() => {
+                    setSelecionado(index);
+                    setAberto(false);
+                    onChange?.(item);
+                  }}
+                >
+                  {renderItem(item)}
+                </div>
+              ))}
             </div>
+          )}
         </div>
-    );
+      ) : (
+        /* Caso 2: Lista expandida */
+        <div
+          className="listbox-options expanded"
+          style={{
+            maxHeight: `${maxVisibleItems * 3.0}rem`,
+            overflowY: "auto",
+          }}
+        >
+          {dados.map((item, index) => (
+            <div
+              key={index}
+              className={`listbox-item ${selecionado === index ? "ativo" : ""}`}
+              role="option"
+              aria-selected={selecionado === index}
+              onClick={() => {
+                setSelecionado(index);
+                onChange?.(item);
+              }}
+              onDoubleClick={() => onItemDoubleClick?.(item)}
+            >
+              {renderItem(item)}
+            </div>
+          ))}
+        </div>
+      )}
+    </div>
+  );
 }
-
