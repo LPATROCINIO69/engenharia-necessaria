@@ -1,7 +1,7 @@
 import { useState } from 'react';
-import { registerUser } from '../services/authService';
 import type { UserRegistrationData } from '../models/AuthTypes';
 import { useNavigate } from 'react-router-dom';
+import { authService } from '../services/apiService';
 
 export const useAuth = () => {
     const [loading, setLoading] = useState(false);
@@ -12,9 +12,10 @@ export const useAuth = () => {
         setLoading(true);
         setError('');
         
-        const result = await registerUser(userData);
+        const result = await authService.register(userData);
         
         setLoading(false);
+        
         
         if (result.success) {
             navigate('/', { 

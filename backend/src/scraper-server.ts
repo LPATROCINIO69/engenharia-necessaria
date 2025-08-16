@@ -14,8 +14,7 @@ async function runScrapers() {
     const opportunities = await infojobsController();      // coleta oportunidades de estágio e emprego para gravar no MongoDB
 
     console.log("✅ Scraping finalizado com sucesso.");
-//    console.log(opportunities);
-//    console.log(opportunities.length);
+
     process.exit(0);
   } catch (error) {
     console.error("❌ Erro ao executar scrapers:", error);

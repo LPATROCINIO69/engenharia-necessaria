@@ -2,11 +2,12 @@ import React, { type CSSProperties, useState } from "react";
 import "../styles/ListBoxCustom.css";
 
 interface ListBoxCustomProps<T> {
-    dados: T[];
+    dados: T[] ;
     renderItem: (item: T) => React.ReactNode;
     maxVisibleItems?: number; // quantos itens ficam visíveis
     label?: string;
     onItemDoubleClick?: (item: T) => void;
+    onChange?: (item: T) => void;
 }
 
 export function ListBoxCustom<T>({
@@ -14,17 +15,13 @@ export function ListBoxCustom<T>({
     renderItem,
     maxVisibleItems = 1,
     label,
-    onItemDoubleClick
+    onItemDoubleClick,
+    onChange
 }: ListBoxCustomProps<T>) {
     const [selecionado, setSelecionado] = useState<number | null>(null);
     const [aberto, setAberto] = useState(false);
 
-    // const containerStyle: CSSProperties =
-    //     maxVisibleItems === 1
-    //         ? { maxHeight: "3.0rem", overflowY: "auto" }
-    //         : { maxHeight: `${maxVisibleItems * 4.5}rem`, overflowY: "auto" };
-
-     const containerStyle: CSSProperties = 
+    const containerStyle: CSSProperties = 
         maxVisibleItems === 1
              ? { height: "2.5rem", overflowY: "auto",position: "relative" }
              : { height: `${maxVisibleItems * 4.5}rem`, overflowY: "auto",position: "relative" };
@@ -54,6 +51,7 @@ export function ListBoxCustom<T>({
                                         onClick={() => {
                                             setSelecionado(index);
                                             setAberto(false);
+                                            if (onChange) onChange(item);
                                         }}
                                     >
                                         {renderItem(item)}
@@ -69,7 +67,10 @@ export function ListBoxCustom<T>({
                             <div
                                 key={index}
                                 className={`listbox-item ${selecionado === index ? "ativo" : ""}`}
-                                onClick={() => setSelecionado(index)}
+                                onClick={() => {
+                                    setSelecionado(index)
+                                    if (onChange) onChange(item);
+                                }}
                                 onDoubleClick={() => onItemDoubleClick && onItemDoubleClick(item)}
                             >
                                 {renderItem(item)}

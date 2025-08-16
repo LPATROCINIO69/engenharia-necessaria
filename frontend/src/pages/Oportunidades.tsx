@@ -6,6 +6,10 @@ import { ListBoxCustom } from "../components/ListBoxCustom";
 import { TipoTrabalhoSelector } from "../components/TipoTrabalhoSeletor";
 
 import '../styles/Oportunidades.css';
+import { listaStatesService } from "../services/statesService";
+import { useEffect, useState } from "react";
+import { listaEngineeringService } from "../services/engineeringService";
+import { listaCitiesService } from "../services/cityService";
 
 
 
@@ -15,15 +19,57 @@ export function Oportunidades() {
     const handleSubmit = (e: React.FormEvent) => {
         e.preventDefault();
         navigate('/divulgar');
-        // Teste de link
-
     };
 
-
+    // armazena os valores selecionados
+    const [estadoSelecionado, setEstadoSelecionado] = useState<string | null>(null);
+    const [engenhariaSelecionada, setEngenhariaSelecionada] = useState<string | null>(null);
+    const [cidadeSelecionada, setCidadeSelecionada] = useState<string | null>(null);
+    const [cidades, setCidades] = useState<string[]>([]);
 
     // TO DO: Resgatar conteúdos para as LISTBOX
-    const cidades = ["São Paulo - SP", "Rio de Janeiro - RJ", "Curitiba - PR"];
-    const engenharias = ["Engenharia Mecânica", "Engenharia Civil", "Engenharia Elétrica"];
+    const [engenharias, setEngenharias] = useState<string[]>([]);      //["Engenharia Mecânica", "Engenharia Civil", "Engenharia Elétrica"];
+    useEffect(() => {
+        listaEngineeringService()
+            .then(setEngenharias)
+            .catch(console.error)
+    }, []);
+
+    const [estados, setEstados] = useState<string[]>([]);
+    useEffect(() => {
+        listaStatesService()
+            .then(setEstados)
+            .catch(console.error)
+    }, []);
+
+    // quando o estado mudar, buscar cidades
+    useEffect(() => {
+        if (!estadoSelecionado) {
+            setCidades([]);
+            setCidadeSelecionada(null);
+            return;
+        }
+
+        let ignore = false;
+
+        (async () => {
+            try {
+                const lista = await listaCitiesService(estadoSelecionado);
+                if (!ignore) {
+                    setCidades(lista);
+                    setCidadeSelecionada(null); // reseta a cidade selecionada
+                }
+            } catch (e) {
+                if (!ignore) console.error(e);
+            }
+        })();
+
+        return () => {
+            ignore = true;
+        };
+    }, [estadoSelecionado]);
+
+
 
     const vagas = [
         { titulo: "Engenheiro Civil", empresa: "Construtora Catanduva", local: "São Paulo - SP" },
@@ -44,12 +90,21 @@ export function Oportunidades() {
                     dados={engenharias}
                     renderItem={(item) => <span>{item}</span>}
                     label="Campo da Engenharia"
+                    onChange={(engenharia) => setEngenhariaSelecionada(engenharia)}
+                />
+
+                <ListBoxCustom
+                    dados={estados}
+                    renderItem={(item) => <span>{item}</span>}
+                    label="Estado (UF)"
+                    onChange={(estado) => setEstadoSelecionado(estado)}
                 />
 
                 <ListBoxCustom
                     dados={cidades}
                     renderItem={(item) => <span>{item}</span>}
-                    label="Local de atuação"
+                    label="Cidade"
+                    onChange={(cidade) => setCidadeSelecionada(cidade)}
                 />
 
                 <TipoTrabalhoSelector />

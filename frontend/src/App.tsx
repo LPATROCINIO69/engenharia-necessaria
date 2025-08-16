@@ -18,6 +18,8 @@ function App() {
         <Route path="/oportunidades" element ={<Oportunidades />} />
         <Route path="/detalhe" element ={<OportunidadeDetalhe />} />
         <Route path="/divulgar" element ={<DivulgacaoOportunidade />} />
+        
+        
       </Routes>
     </Router>
     

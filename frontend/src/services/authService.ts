@@ -1,5 +1,5 @@
 import type { UserRegistrationData, AuthResponse } from "../models/AuthTypes";
-import apiConfig from '../config/apiConfig.ts';
+import {apiConfig} from '../config/apiConfig.ts';
 
 
 export const registerUser = async (userData: UserRegistrationData): Promise<AuthResponse> => {
@@ -42,7 +42,9 @@ export const validaUser = async (userData: UserRegistrationData): Promise<AuthRe
             throw new Error(data.error || 'Registration failure.')
         }
 
-        return { success: true };
+        return { success: true,
+                 token: data.token
+         };
 
     } catch(error) {
         console.error("Erro no validação do login:", error);

@@ -10,3 +10,4 @@ export interface AuthResponse {
     error?:string;
     token?:string;
 }
+

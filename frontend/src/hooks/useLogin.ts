@@ -1,29 +1,29 @@
 import { useState } from 'react';
-import { validaUser } from '../services/authService';
 import type { UserRegistrationData } from '../models/AuthTypes';
 import { useNavigate } from 'react-router-dom';
+import { storeToken } from '../util/authUtil';
+import { authService } from '../services/apiService';
 
 export const useLogin = () => {
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState('');
     const navigate = useNavigate();
 
-    const handleRegister = async (userData: UserRegistrationData) => {
+    const handleLogin = async (userData: UserRegistrationData) => {
         setLoading(true);
         setError('');
-        
-        const result = await validaUser(userData);
-        
+
+        const result = await authService.login(userData);
+        console.log("token:", result.token);
         setLoading(false);
-        
-        if (result.success) {
-            navigate('/oportunidades', { 
-                state: { success: 'Login realizado com sucesso!' } 
-            });
+
+        if (result.success && result.token) {
+            storeToken(result.token);
+            navigate('/oportunidades');
         } else {
             setError(result.error || 'Erro desconhecido durante o cadastro');
         }
     };
 
-    return { loading, error, handleRegister };
+    return { loading, error, handleLogin };
 };

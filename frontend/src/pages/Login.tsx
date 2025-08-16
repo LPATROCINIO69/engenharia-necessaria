@@ -13,12 +13,12 @@ import { useLogin } from "../hooks/useLogin";
 export function Login(){
     const [email, setEmail]= useState('');
     const [password, setPassword]= useState('');
-    const {loading, error, handleRegister} = useLogin();
+    const {loading, error, handleLogin} = useLogin();
     
 
     const handleSubmit = (e:React.FormEvent) =>{
         e.preventDefault();        
-         handleRegister({  email, password });      
+         handleLogin({  email, password });      
 
     };
 
