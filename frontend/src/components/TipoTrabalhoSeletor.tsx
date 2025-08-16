@@ -1,8 +1,19 @@
 import { useState } from "react";
 import "../styles/TipoTrabalhoSelector.css"; // arquivo css isolado
 
-export function TipoTrabalhoSelector() {
+
+interface TipoTrabalhoSelectorProps {
+  onChange?: (valor:string) => void;
+}
+
+
+export function TipoTrabalhoSelector({onChange}:TipoTrabalhoSelectorProps) {
   const [tipo, setTipo] = useState("estagio");
+
+  const handleChange = (valor: string) => {
+    setTipo(valor);
+    onChange?.(valor); // envia a seleção para o pai
+  };
 
   return (
     <div className="tipo-trabalho">
@@ -12,7 +23,7 @@ export function TipoTrabalhoSelector() {
           name="tipoTrabalho"
           value="estagio"
           checked={tipo === "estagio"}
-          onChange={(e) => setTipo(e.target.value)}
+          onChange={() => handleChange("estagio")}
         />
         <span>Estágio</span>
       </label>
@@ -23,7 +34,7 @@ export function TipoTrabalhoSelector() {
           name="tipoTrabalho"
           value="efetivo"
           checked={tipo === "efetivo"}
-          onChange={(e) => setTipo(e.target.value)}
+          onChange={() => handleChange("efetivo")}
         />
         <span>Efetivo</span>
       </label>

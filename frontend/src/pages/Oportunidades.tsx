@@ -6,10 +6,12 @@ import { ListBoxCustom } from "../components/ListBoxCustom";
 import { TipoTrabalhoSelector } from "../components/TipoTrabalhoSeletor";
 
 import '../styles/Oportunidades.css';
-import { listaStatesService } from "../services/statesService";
-import { useEffect, useState } from "react";
-import { listaEngineeringService } from "../services/engineeringService";
-import { listaCitiesService } from "../services/cityService";
+import { useState } from "react";
+
+import { useEngenharias } from "../hooks/useEngenharias";
+import { useEstados } from "../hooks/useEstados";
+import { useCidades } from "../hooks/useCidades";
+import { useOpportunities } from "../hooks/useOpportunities";
 
 
 
@@ -21,55 +23,16 @@ export function Oportunidades() {
         navigate('/divulgar');
     };
 
-    // armazena os valores selecionados
+    
     const [estadoSelecionado, setEstadoSelecionado] = useState<string | null>(null);
-    const [engenhariaSelecionada, setEngenhariaSelecionada] = useState<string | null>(null);
+    const [engenhariaSelecionada, setEngenhariaSelecionada] = useState<string>("Engenharia Mecanica");
     const [cidadeSelecionada, setCidadeSelecionada] = useState<string | null>(null);
-    const [cidades, setCidades] = useState<string[]>([]);
+    const [tipoTrabalhoSelecionado, setTipoTrabalhoSelecionado] = useState<string>("estagio");
 
-    // TO DO: Resgatar conteúdos para as LISTBOX
-    const [engenharias, setEngenharias] = useState<string[]>([]);      //["Engenharia Mecânica", "Engenharia Civil", "Engenharia Elétrica"];
-    useEffect(() => {
-        listaEngineeringService()
-            .then(setEngenharias)
-            .catch(console.error)
-    }, []);
-
-    const [estados, setEstados] = useState<string[]>([]);
-    useEffect(() => {
-        listaStatesService()
-            .then(setEstados)
-            .catch(console.error)
-    }, []);
-
-    // quando o estado mudar, buscar cidades
-    useEffect(() => {
-        if (!estadoSelecionado) {
-            setCidades([]);
-            setCidadeSelecionada(null);
-            return;
-        }
-
-        let ignore = false;
-
-        (async () => {
-            try {
-                const lista = await listaCitiesService(estadoSelecionado);
-                if (!ignore) {
-                    setCidades(lista);
-                    setCidadeSelecionada(null); // reseta a cidade selecionada
-                }
-            } catch (e) {
-                if (!ignore) console.error(e);
-            }
-        })();
-
-        return () => {
-            ignore = true;
-        };
-    }, [estadoSelecionado]);
-
-
+    const engenharias = useEngenharias();
+    const estados = useEstados();
+    const cidades = useCidades(estadoSelecionado);
+    const oportunities = useOpportunities(engenhariaSelecionada, tipoTrabalhoSelecionado, estadoSelecionado, cidadeSelecionada);
 
     const vagas = [
         { titulo: "Engenheiro Civil", empresa: "Construtora Catanduva", local: "São Paulo - SP" },
@@ -107,7 +70,7 @@ export function Oportunidades() {
                     onChange={(cidade) => setCidadeSelecionada(cidade)}
                 />
 
-                <TipoTrabalhoSelector />
+                <TipoTrabalhoSelector onChange={setTipoTrabalhoSelecionado}/>
 
                 <ListBoxCustom
                     dados={vagas}
