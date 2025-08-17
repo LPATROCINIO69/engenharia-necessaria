@@ -19,6 +19,10 @@
     flex-direction: column;
     gap:14px;
 }
-
-
+.actions-row {
+  display: flex;
+  justify-content: space-between; /* pode trocar por space-between ou center se preferir */
+  gap: 1rem; /* espaço entre os botões */
+  margin-top: 1rem; /* separa dos outros campos */
+}
 

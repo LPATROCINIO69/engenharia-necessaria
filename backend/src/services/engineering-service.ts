@@ -5,11 +5,11 @@ export const listarEngenharias = async () => {
 
 
     // Busca todos os estados únicos usando Mongoose + MongoDB
-    const engenharias = await Engineering.distinct("name");
+    const engenharias = await Engineering.find();
     
     // Ordena alfabeticamente
     engenharias.sort();
-
+    console.log(engenharias);
     let response = null;
 
     if (engenharias.length >= 1) {

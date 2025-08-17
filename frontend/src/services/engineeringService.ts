@@ -1,7 +1,8 @@
 import { apiConfig } from '../config/apiConfig';
+import type { FieldEngineeringType } from '../models/FieldEngineeringType';
 
 
-export const listaEngineeringService = async (): Promise<string[]> => {
+export const listaEngineeringService = async (): Promise<FieldEngineeringType[]> => {
     try {
         const response = await fetch(apiConfig.engineering, {
             method: 'GET', 

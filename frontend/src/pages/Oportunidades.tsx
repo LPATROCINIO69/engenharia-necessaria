@@ -16,6 +16,7 @@ import { useOpportunities } from "../hooks/useOpportunities";
 
 
 
+
 export function Oportunidades() {
     const navigate = useNavigate();
 
@@ -26,20 +27,21 @@ export function Oportunidades() {
 
 
     const [estadoSelecionado, setEstadoSelecionado] = useState<string | null>(null);
-    const [engenhariaSelecionada, setEngenhariaSelecionada] = useState<string>("Engenharia Mecanica");
+    const [engenhariaSelecionada, setEngenhariaSelecionada] = useState<string>("");
     const [cidadeSelecionada, setCidadeSelecionada] = useState<string | null>(null);
-    const [tipoTrabalhoSelecionado, setTipoTrabalhoSelecionado] = useState<string>("estagio");
+    const [tipoTrabalhoSelecionado, setTipoTrabalhoSelecionado] = useState<string>("trainee");
 
     const [filtrar, setFiltrar] = useState(false);
 
     const engenharias = useEngenharias();
+    console.log("nomes de engenharia:", engenharias);
     const estados = useEstados();
     const cidades = useCidades(estadoSelecionado);
 
 
     const opportunities = useOpportunities(filtrar, engenhariaSelecionada, tipoTrabalhoSelecionado, estadoSelecionado, cidadeSelecionada);
 
-    
+
     const handleFilter = () => {
         setFiltrar(prev => !prev); // dispara o efeito
     };
@@ -52,9 +54,9 @@ export function Oportunidades() {
 
                 <ListBoxCustom
                     dados={engenharias}
-                    renderItem={(item) => <span>{item}</span>}
+                    renderItem={(item) => <span>{item.name}</span>}
                     label="Campo da Engenharia"
-                    onChange={(engenharia) => setEngenhariaSelecionada(engenharia)}
+                    onChange={(engenharia) => setEngenhariaSelecionada(engenharia.key)}
                 />
 
                 <ListBoxCustom
@@ -71,8 +73,10 @@ export function Oportunidades() {
                     onChange={(cidade) => setCidadeSelecionada(cidade)}
                 />
 
+
                 <TipoTrabalhoSelector onChange={setTipoTrabalhoSelecionado} />
-                <Button type="button" onClick={handleFilter}>Filtrar</Button>
+
+
 
                 <ListBoxCustom
                     dados={opportunities}
@@ -81,12 +85,15 @@ export function Oportunidades() {
                         {"Empresa: Confidencial"}<br />
                         {vaga.jobLocation}</span>}
                     maxVisibleItems={3}
-                    onItemDoubleClick={() => navigate('/detalhe')}
+                    onItemDoubleClick={(vaga) => navigate('/detalhe', { state: { vaga }})}
                 />
 
-
-                <Button type="submit">Divulgar Oportunidades</Button>
-            </form>
+                <div className="actions-row">
+                    <Button type="submit">Divulgar Oportunidades</Button>
+                    <Button type="button" onClick={handleFilter}>Filtrar</Button>
+                    
+                </div>
+            </form >
 
         </div >
 

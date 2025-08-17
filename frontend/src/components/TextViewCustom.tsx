@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import "../styles/TextViewCustom.css";
+import DOMPurify from 'dompurify';
 
 interface TextViewCustomProps {
     text: string;
@@ -9,6 +10,7 @@ interface TextViewCustomProps {
     height?: string | number;
     width?: string | number;
     className?: string;
+    allowHTML?: boolean;
 }
 
 export function TextViewCustom({
@@ -19,6 +21,7 @@ export function TextViewCustom({
     height = 200,
     width = "100%",
     className = "",
+    allowHTML = false
 }: TextViewCustomProps) {
     // Se editável, podemos usar estado interno para controlar texto
     const [value, setValue] = useState(text);
@@ -56,22 +59,40 @@ export function TextViewCustom({
     return (
         <div>
             <label>{label}</label>
-            <div
-                className={`text-view ${className}`}
-                style={{
-                    height,
-                    width,
-                    overflowY: "auto",
-                    whiteSpace: "pre-wrap",
-                    border: "1px solid #ccc",
-                    borderRadius: 4,
-                    backgroundColor: "#fafafa",
-                    userSelect: "text",
-                }}
-            >
-                {value}
-            </div>
-        </div>
+            {allowHTML ? (
+                <div
+                    className={`text-view ${className}`}
+                    style={{
+                        height,
+                        width,
+                        overflowY: "auto",
+                        border: "1px solid #ccc",
+                        borderRadius: 4,
+                        backgroundColor: "#fafafa",
+                        userSelect: "text",
+                        padding: 8,
+                    }}
+                    dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(value) }}
+                />
+            ) : (
+                <div
+                    className={`text-view ${className}`}
+                    style={{
+                        height,
+                        width,
+                        overflowY: "auto",
+                        border: "1px solid #ccc",
+                        borderRadius: 4,
+                        backgroundColor: "#fafafa",
+                        userSelect: "text",
+                        padding: 8,
+                    }}
+
+                >
+                    {value}
+                </div>
+            )}
+        </div >
 
     );
 }
