@@ -1,25 +1,19 @@
 import { useEffect, useState } from "react";
-import { listaCitiesService } from "../services/cityService";
+import { listaOpportunities } from "../services/opportunityService";
+import type { Opportunity } from "../models/opportunitType";
 
-export function useOpportunities(tipoEngenharia:string, tipoTrabalho:string, estado?:string|null, cidade?:string|null ) {
-    const [opportunities, setOpportunities] = useState<string[]>([]);
+export function useOpportunities(filtrar: boolean, tipoEngenharia: string, tipoTrabalho: string, estado?: string | null, cidade?: string | null,) {
+    const [opportunities, setOpportunities] = useState<Opportunity[]>([]);
+
 
     useEffect(() => {
-        if (!estadoSelecionado) {
-            setCidades([]);
-            return;
-        }
+        if (!filtrar) return; // só executa se filtrar for true
+        listaOpportunities(tipoEngenharia, tipoTrabalho, estado, cidade)
+            .then(setOpportunities)
+            .catch(console.error);
+        
+    }, [filtrar, tipoEngenharia, tipoTrabalho, estado, cidade]);
 
-        let ignore = false;
+    return opportunities;
 
-        listaOpportunities(tipoEngenharia, tipoTrabalho, estado, cidade);
-            .then((lista) => {
-                if (!ignore) setCidades(lista);
-            })
-            .catch((err) => { if (!ignore) console.error(err) });
-
-        return () => { ignore = true; }
-    }, [estadoSelecionado]);
-
-    return cidades;
 }

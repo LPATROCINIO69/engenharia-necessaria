@@ -7,13 +7,14 @@ import * as HttpResponse from "../utils/http-helper";
 export const getOpportunitiesService = async (keyTypeJob?:string, keyTypeEngineering?:string, jobLocation?:string) =>{
     
     let typeJob;
-    if (keyTypeJob && keyTypeJob in TypeJob) typeJob = TypeJob[keyTypeJob as keyof typeof TypeJob];
+    if (keyTypeJob && keyTypeJob.toUpperCase() in TypeJob) typeJob = TypeJob[keyTypeJob.toUpperCase() as keyof typeof TypeJob];
         else typeJob = undefined;
 
     let typeEngineering;
     if (keyTypeEngineering && keyTypeEngineering in FieldEngineering) typeEngineering = FieldEngineering[keyTypeEngineering as keyof typeof FieldEngineering];
         else typeEngineering = undefined;
 
+    console.log("tipo de trabalho: ", typeJob, " - tipo de engenharia: ", typeEngineering, " - Local: ", jobLocation);
     const data = await findAllOpportunities(typeJob,typeEngineering,jobLocation);
     let response = null;
 

@@ -12,6 +12,7 @@ import { useEngenharias } from "../hooks/useEngenharias";
 import { useEstados } from "../hooks/useEstados";
 import { useCidades } from "../hooks/useCidades";
 import { useOpportunities } from "../hooks/useOpportunities";
+import type { Opportunity } from "../models/opportunitType";
 
 
 
@@ -23,25 +24,31 @@ export function Oportunidades() {
         navigate('/divulgar');
     };
 
-    
+
     const [estadoSelecionado, setEstadoSelecionado] = useState<string | null>(null);
     const [engenhariaSelecionada, setEngenhariaSelecionada] = useState<string>("Engenharia Mecanica");
     const [cidadeSelecionada, setCidadeSelecionada] = useState<string | null>(null);
     const [tipoTrabalhoSelecionado, setTipoTrabalhoSelecionado] = useState<string>("estagio");
 
+    const [filtrar, setFiltrar] = useState(false);
+
     const engenharias = useEngenharias();
     const estados = useEstados();
     const cidades = useCidades(estadoSelecionado);
-    const oportunities = useOpportunities(engenhariaSelecionada, tipoTrabalhoSelecionado, estadoSelecionado, cidadeSelecionada);
-
-    const vagas = [
-        { titulo: "Engenheiro Civil", empresa: "Construtora Catanduva", local: "São Paulo - SP" },
-        { titulo: "Supervisor Geral", empresa: "Alias Arquitetura", local: "São Bernardo - SP" },
-        { titulo: "Arquiteto", empresa: "Beta Engenharia", local: "Curitiba - PR" },
-        { titulo: "Técnico de Obras", empresa: "Construtora Delta", local: "Campinas - SP" }
-    ];
 
 
+    const opportunities = useOpportunities(filtrar, engenhariaSelecionada, tipoTrabalhoSelecionado, estadoSelecionado, cidadeSelecionada);
+
+    // const vagas = [
+    //     { titulo: "Engenheiro Civil", empresa: "Construtora Catanduva", local: "São Paulo - SP" },
+    //     { titulo: "Supervisor Geral", empresa: "Alias Arquitetura", local: "São Bernardo - SP" },
+    //     { titulo: "Arquiteto", empresa: "Beta Engenharia", local: "Curitiba - PR" },
+    //     { titulo: "Técnico de Obras", empresa: "Construtora Delta", local: "Campinas - SP" }
+    // ];
+
+    const handleFilter = () => {
+        setFiltrar(prev => !prev); // dispara o efeito
+    };
 
     return (
         <div className="oportunidades-container">
@@ -70,14 +77,15 @@ export function Oportunidades() {
                     onChange={(cidade) => setCidadeSelecionada(cidade)}
                 />
 
-                <TipoTrabalhoSelector onChange={setTipoTrabalhoSelecionado}/>
+                <TipoTrabalhoSelector onChange={setTipoTrabalhoSelecionado} />
+                <Button type="button" onClick={handleFilter}>Filtrar</Button>
 
                 <ListBoxCustom
-                    dados={vagas}
+                    dados={opportunities}
                     renderItem={(vaga) => <span>
-                        <strong>{vaga.titulo}</strong><br />
-                        {vaga.empresa}<br />
-                        {vaga.local}</span>}
+                        <strong>{vaga.title}</strong><br />
+                        {"Empresa: Confidencial"}<br />
+                        {vaga.jobLocation}</span>}
                     maxVisibleItems={3}
                     onItemDoubleClick={() => navigate('/detalhe')}
                 />
