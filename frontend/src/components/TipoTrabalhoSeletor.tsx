@@ -8,7 +8,7 @@ interface TipoTrabalhoSelectorProps {
 
 
 export function TipoTrabalhoSelector({onChange}:TipoTrabalhoSelectorProps) {
-  const [tipo, setTipo] = useState("estagio");
+  const [tipo, setTipo] = useState("trainee");
 
   const handleChange = (valor: string) => {
     setTipo(valor);
@@ -21,9 +21,9 @@ export function TipoTrabalhoSelector({onChange}:TipoTrabalhoSelectorProps) {
         <input
           type="radio"
           name="tipoTrabalho"
-          value="estagio"
-          checked={tipo === "estagio"}
-          onChange={() => handleChange("estagio")}
+          value="trainee"
+          checked={tipo === "trainee"}
+          onChange={() => handleChange("trainee")}
         />
         <span>Estágio</span>
       </label>
@@ -32,9 +32,9 @@ export function TipoTrabalhoSelector({onChange}:TipoTrabalhoSelectorProps) {
         <input
           type="radio"
           name="tipoTrabalho"
-          value="efetivo"
-          checked={tipo === "efetivo"}
-          onChange={() => handleChange("efetivo")}
+          value="job"
+          checked={tipo === "job"}
+          onChange={() => handleChange("job")}
         />
         <span>Efetivo</span>
       </label>

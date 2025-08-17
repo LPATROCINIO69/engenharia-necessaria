@@ -12,7 +12,7 @@ import { useEngenharias } from "../hooks/useEngenharias";
 import { useEstados } from "../hooks/useEstados";
 import { useCidades } from "../hooks/useCidades";
 import { useOpportunities } from "../hooks/useOpportunities";
-import type { Opportunity } from "../models/opportunitType";
+
 
 
 
@@ -39,13 +39,7 @@ export function Oportunidades() {
 
     const opportunities = useOpportunities(filtrar, engenhariaSelecionada, tipoTrabalhoSelecionado, estadoSelecionado, cidadeSelecionada);
 
-    // const vagas = [
-    //     { titulo: "Engenheiro Civil", empresa: "Construtora Catanduva", local: "São Paulo - SP" },
-    //     { titulo: "Supervisor Geral", empresa: "Alias Arquitetura", local: "São Bernardo - SP" },
-    //     { titulo: "Arquiteto", empresa: "Beta Engenharia", local: "Curitiba - PR" },
-    //     { titulo: "Técnico de Obras", empresa: "Construtora Delta", local: "Campinas - SP" }
-    // ];
-
+    
     const handleFilter = () => {
         setFiltrar(prev => !prev); // dispara o efeito
     };

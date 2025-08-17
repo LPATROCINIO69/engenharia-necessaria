@@ -1,5 +1,5 @@
 import { apiConfig } from "../config/apiConfig";
-import type { Opportunity } from "../models/opportunitType";
+import type { Opportunity } from "../models/OpportunitType";
 
 
 export const listaOpportunities = async (engenharia:string, tipoTrabalho:string, estado?:string|null, cidade?:string|null)

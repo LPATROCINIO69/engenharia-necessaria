@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { listaOpportunities } from "../services/opportunityService";
-import type { Opportunity } from "../models/opportunitType";
+import type { Opportunity } from "../models/OpportunitType";
 
 export function useOpportunities(filtrar: boolean, tipoEngenharia: string, tipoTrabalho: string, estado?: string | null, cidade?: string | null,) {
     const [opportunities, setOpportunities] = useState<Opportunity[]>([]);
