@@ -34,7 +34,6 @@ export function Oportunidades() {
     const [filtrar, setFiltrar] = useState(false);
 
     const engenharias = useEngenharias();
-    console.log("nomes de engenharia:", engenharias);
     const estados = useEstados();
     const cidades = useCidades(estadoSelecionado);
 
