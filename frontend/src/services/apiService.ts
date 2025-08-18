@@ -1,5 +1,6 @@
 import { apiConfig } from "../config/apiConfig";
 import type { UserRegistrationData, AuthResponse } from "../models/AuthTypes";
+import type { Opportunity } from "../models/OpportunitType";
 import { getToken} from "../util/authUtil";
 
 export const fetchAuth = async (url: string, options: RequestInit = {}): Promise<AuthResponse> => {
@@ -42,6 +43,13 @@ export const authService = {
             method: 'GET'
         }),
 
-    getOpportunities: () => fetchAuth(apiConfig.opportunities)
+    getOpportunities: () => fetchAuth(apiConfig.opportunities),
 
+    registerOpportunity: (opportunityData: Opportunity) =>
+        fetchAuth(apiConfig.opportunities, {
+            method: 'POST',
+            body: JSON.stringify(opportunityData)
+        })
 }
+
+

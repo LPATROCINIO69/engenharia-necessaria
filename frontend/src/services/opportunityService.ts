@@ -1,4 +1,5 @@
 import { apiConfig } from "../config/apiConfig";
+import type { AuthResponse } from "../models/AuthTypes";
 import type { Opportunity } from "../models/OpportunitType";
 
 
@@ -31,3 +32,28 @@ export const listaOpportunities = async (engenharia:string, tipoTrabalho:string,
             throw error; // Rejeita a promise para ser tratada pelo chamador
         }    
 }
+
+
+// export const registerOpportunity = async (opportunityData: Opportunity): Promise<AuthResponse> => {
+//     try {
+//         const response = await fetch(apiConfig.opportunities, {
+//             method: 'POST',
+//             headers: {
+//                 'Content-Type': 'application/json'
+//             },
+//             body: JSON.stringify(opportunityData)
+//         });
+
+//         const data = await response.json();
+
+//         if (!response.ok) {
+//             throw new Error(data.error || 'Registration failure.')
+//         }
+
+//         return { success: true };
+
+//     } catch (error) {
+//         console.error("Erro no cadastro:", error);
+//         return { success: false, error: error instanceof Error ? error.message : 'Erro desconhecido' };
+//     }
+// }
