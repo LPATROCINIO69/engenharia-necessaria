@@ -8,6 +8,15 @@ Estabelecido no servidor (server) para processar os dados e composto por:
  - API que gerencia as requisições e repostas html;
  - _Web Scraper_ para retorno de dados a partir de sites de vagas de estágio/emprego.
 
+## Tecnologias utilizadas
+O Backend (API+WEB SCRAPER) utilizou as seguintes tecnologias em seu desenvolvimento:
+- Node.js
+- Express
+- Typescript
+- MongoDB Atlas
+- Puppeteer
+- JWT
+
 ## Dependências do Backend
 As dependências do backend podem ser instaladas por meio da seguinte instrução:
 
