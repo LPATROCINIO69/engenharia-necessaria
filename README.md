@@ -18,8 +18,8 @@ Trabalho de Conclusão de Curso de Pós-Graduação em Desenvolvimento de Sistem
   - Divulgar vaga: permite que o usuário cadastre uma nova vaga no banco de dados para ser acessada por outros usuários que queiram tomar conhecimento a respeito.
 
 ## LINKS para Documentação
-- [Documentação do BACKEND]()
-- [Documentação do FRONTEND]()
+- [Documentação do BACKEND](./backend/README.md)
+- [Documentação do FRONTEND](./frontend/README.md)
 
 
 
