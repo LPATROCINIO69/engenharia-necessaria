@@ -104,7 +104,7 @@ Os endpoints utilizados para acessar as funcionalidades da API podem ser visuali
 | **POST**   | `/api/opportunities`     | `{ titulo, empresa, local, requisitos, beneficios, fonte }`  | `body`   | Cadastra manualmente uma nova oportunidade (usuário autenticado). |
 | **DELETE** | `/api/opportunities/:id` | `id` (identificador da vaga)                                 | `params` | Remove oportunidade cadastrada pelo usuário (quando autorizado).  |
 
-## Como Executar a API ...
+## Como Executar a API
 A API pode ser executada utilizando os seguintes scripts (conforme descrito no package.json):
 -   _utilizar_ `npm run start:dev` _para executar a API no ambiente de desenvolvimento_.
 -   _utilizar_ `npm run start:watch` _para executar a API no ambiente de desenvolvimento em modo "watch"_ 
