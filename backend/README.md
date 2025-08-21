@@ -1,21 +1,6 @@
 # 📢Sistema Engenharia-Necessaria - BACKEND
 
-## Sumário
-- [Apresentação](#apresentacao)
-- [Backend](#backend)
-- [Estrutura de Arquivo](#estrutura-de-arquivo)
-- [Tecnologias utilizadas](#tecnologias-utilizadas)
-- [Dependências do Backend](#dependencias-do-backend)
-- [Variáveis de ambiente](#variaveis-de-ambiente)
-- [API - Endpoints Principais](#api---endpoints-principais)
-- [Como Executar a API](#como-executar-a-api)
-- [Dicionário de Dados - Banco engenhariaopportunity](#dicionario-de-dados---banco-engenhariaopportunity)
-  - [Coleção: users](#colecao-users)
-  - [Coleção: opportunities](#colecao-opportunities)
-  - [Coleção: engineerings](#colecao-engineerings)
-  - [Coleção: joblocation](#colecao-joblocation)
-
-## Apresentacao 
+## Apresentação 
 Trabalho de Conclusão de Curso de Pós-Graduação em Desenvolvimento de Sistemas Full-Stack pela PUC-RS. Este trabalho tem por objetivo criar um sistema que gerencia e disponibiliza vagas de emprego e estágio para engenheiros.
 
 ## Backend
