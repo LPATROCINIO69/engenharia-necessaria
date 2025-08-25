@@ -19,4 +19,5 @@ export const findAllOpportunities = async (
 
 export const insertOpportunity = async(opportunityData: Opportunity)=>{
     const newOpportunity = await OpportunityModel.create(opportunityData);
+    return newOpportunity;
 };

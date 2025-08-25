@@ -14,7 +14,7 @@ export const getOpportunitiesService = async (keyTypeJob?:string, keyTypeEnginee
     if (keyTypeEngineering && keyTypeEngineering in FieldEngineering) typeEngineering = FieldEngineering[keyTypeEngineering as keyof typeof FieldEngineering];
         else typeEngineering = undefined;
 
-    console.log("tipo de trabalho: ", typeJob, " - tipo de engenharia: ", typeEngineering, " - Local: ", jobLocation);
+//    console.log("tipo de trabalho: ", typeJob, " - tipo de engenharia: ", typeEngineering, " - Local: ", jobLocation);
     const data = await findAllOpportunities(typeJob,typeEngineering,jobLocation);
     let response = null;
 

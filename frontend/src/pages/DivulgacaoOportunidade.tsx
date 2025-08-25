@@ -5,24 +5,18 @@ import { TextViewCustom } from "../components/TextViewCustom";
 import { HeaderPage } from "../components/HeaderPage";
 
 import '../styles/DivulgacaoOportunidade.css';
-import { useNavigate } from "react-router-dom";
 import { ListBoxCustom } from "../components/ListBoxCustom";
 import { TipoTrabalhoSelector } from "../components/TipoTrabalhoSeletor";
 import { useEngenharias } from "../hooks/useEngenharias";
 import { useEstados } from "../hooks/useEstados";
 import { useCidades } from "../hooks/useCidades";
-import { useAuth } from "../hooks/useAuth";
 import { useRegisterOpportunity } from "../hooks/useRegisterOpportunity";
-import type { Opportunity } from "../models/OpportunitType";
 
 // TO DO: Resgatar conteúdos para as LISTBOX
-const cidades = ["São Paulo - SP", "Rio de Janeiro - RJ", "Curitiba - PR"];
-const engenharias = ["Engenharia Mecânica", "Engenharia Civil", "Engenharia Elétrica"];
 
 
 export function DivulgacaoOportunidade() {
-    const navigate = useNavigate();
-
+    
     const [title, setTitle] = useState("");
     const [description, setDescription] = useState("");
     const [engineering, setEngineering] = useState("");

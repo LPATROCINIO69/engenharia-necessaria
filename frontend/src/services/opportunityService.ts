@@ -1,5 +1,4 @@
 import { apiConfig } from "../config/apiConfig";
-import type { AuthResponse } from "../models/AuthTypes";
 import type { Opportunity } from "../models/OpportunitType";
 
 

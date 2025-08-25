@@ -9,7 +9,14 @@ export const getOpportunities = async (req:Request, res:Response)=>{
     const keyTypeEngineering = req.query.typeEngineering as string| undefined;
     const jobLocation = req.query.jobLocation as string | undefined;
     const response = await getOpportunitiesService(keyTypeJob, keyTypeEngineering, jobLocation);
-    res.status(response.statusCode).json(response.body);
+//    res.status(response.statusCode).json(response.body);
+
+    if(response.statusCode === 204){
+        res.status(204).send(null); // força enviar null
+    } else {
+        res.status(response.statusCode).json(response.body);
+    }
+
 }
 
 export const postOpportunity = async (req:Request, res:Response)=>{

@@ -12,6 +12,5 @@ const EngineeringSchema = new Schema<IEngineering>({
 { collection: "engineerings" }
 );
 
-EngineeringSchema.index({ key: 1 }, { unique: true });
 
 export default mongoose.model<IEngineering>("Engineering", EngineeringSchema);

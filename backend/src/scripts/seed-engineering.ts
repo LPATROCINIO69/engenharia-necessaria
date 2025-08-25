@@ -1,5 +1,5 @@
 import mongoose from "mongoose";
-import { EngineeringModel } from "../models/engineering-schema";
+import  Engineering from "../models/engineering-schema";
 import { FieldEngineering } from "../domain/enums/fieldEngineering";
 
 async function seedEngineering() {
@@ -16,11 +16,11 @@ async function seedEngineering() {
     console.log("📋 Engenharias encontradas:", engineeringArray.length);
 
     // Limpa a coleção antes
-    await EngineeringModel.deleteMany({});
+    await Engineering.deleteMany({});
     console.log("🗑️ Coleção 'engineering' limpa");
 
     // Insere no banco
-    await EngineeringModel.insertMany(engineeringArray);
+    await Engineering.insertMany(engineeringArray);
     console.log("✅ Engenharias inseridas com sucesso!");
   } catch (error) {
     console.error("❌ Erro ao popular engenharias:", error);

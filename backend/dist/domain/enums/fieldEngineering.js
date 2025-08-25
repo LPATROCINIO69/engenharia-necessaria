@@ -1,0 +1,25 @@
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.FieldEngineering = void 0;
+var FieldEngineering;
+(function (FieldEngineering) {
+    FieldEngineering["Civil"] = "Engenharia Civil";
+    FieldEngineering["Mecanica"] = "Engenharia Mecanica";
+    FieldEngineering["Eletrica"] = "Engenharia Eletrica";
+    FieldEngineering["Eletronica"] = "Engenharia Eletronica";
+    FieldEngineering["Producao"] = "Engenharia de Producao";
+    FieldEngineering["Computacao"] = "Engenharia da Computacao";
+    FieldEngineering["Quimica"] = "Engenharia Quimica";
+    FieldEngineering["Ambiental"] = "Engenharia Ambiental";
+    FieldEngineering["Alimentos"] = "Engenharia de Alimentos";
+    FieldEngineering["Agronoma"] = "Engenharia Agronomica";
+    FieldEngineering["Florestal"] = "Engenharia Florestal";
+    FieldEngineering["Petroleo"] = "Engenharia de Petroleo";
+    FieldEngineering["Biomedica"] = "Engenharia Biomedica";
+    FieldEngineering["Telecomunicacoes"] = "Engenharia de Telecomunicacoes";
+    FieldEngineering["Naval"] = "Engenharia Naval";
+    FieldEngineering["Aeronautica"] = "Engenharia Aeronautica";
+    FieldEngineering["Nuclear"] = "Engenharia Nuclear";
+    FieldEngineering["Materiais"] = "Engenharia de Materiais";
+    FieldEngineering["Sanitaria"] = "Engenharia Sanitaria";
+})(FieldEngineering || (exports.FieldEngineering = FieldEngineering = {}));

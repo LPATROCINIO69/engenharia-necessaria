@@ -1,0 +1,17 @@
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+const express_1 = require("express");
+const opportunities_controllers_1 = require("../controllers/opportunities-controllers");
+const auth_controller_1 = require("../controllers/auth-controller");
+const states_controller_1 = require("../controllers/states-controller");
+const engineering_controller_1 = require("../controllers/engineering-controller");
+const cities_controller_1 = require("../controllers/cities-controller");
+const router = (0, express_1.Router)();
+router.get("/opportunities", opportunities_controllers_1.getOpportunities);
+router.post("/opportunities", opportunities_controllers_1.postOpportunity);
+router.post("/login", auth_controller_1.login);
+router.post("/register", auth_controller_1.register);
+router.get("/engineering", engineering_controller_1.getEngineering);
+router.get("/states", states_controller_1.getStates);
+router.get("/cities", cities_controller_1.getCities);
+exports.default = router;
