@@ -28,6 +28,7 @@ jobs:
         with:
           node-version: ${{ matrix.node-version }}
           cache: 'npm'
+          cache-dependency-path: backend/package-lock.json
           
       # 3️⃣ Entrar na pasta backend e instalar dependências
       - name: Install dependencies (Backend)
