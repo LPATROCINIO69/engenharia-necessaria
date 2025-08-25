@@ -38,7 +38,7 @@ jobs:
       # 4️⃣ Build do backend
       - name: Build Backend
         working-directory: ./backend
-        run: npm run build
+        run: npm run dist
 
       # 5️⃣ Executar os testes do backend
       - name: Run Backend Tests
