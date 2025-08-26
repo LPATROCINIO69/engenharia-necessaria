@@ -106,7 +106,7 @@ jobs:
             --cpu 1 \
             --service-account="engenharia-necessaria@reference-yen-415813.iam.gserviceaccount.com" \
             --set-env-vars=NODE_ENV=production \
-            --update-secrets=DATABASE_URL=DB_SECRET:latest \
+            --update-secrets=DATABASE_URL=MONGO_URI:latest \
             --quiet
 
       # 8️⃣ Obter URL do serviço deployado
