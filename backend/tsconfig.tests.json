@@ -1,4 +1,9 @@
 {
   "extends": "./tsconfig.json",
-  "include": ["tests"]
+  "compilerOptions": {
+    "rootDir": "./",   // raiz do backend para incluir /src e /tests
+    "outDir": "./dist-tests",  // pasta separada para compilação dos testes
+    "types": ["node", "jest"]
+  },
+  "include": ["tests/**/*.ts"]
 }
