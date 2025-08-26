@@ -16,7 +16,13 @@ const getOpportunities = (req, res) => __awaiter(void 0, void 0, void 0, functio
     const keyTypeEngineering = req.query.typeEngineering;
     const jobLocation = req.query.jobLocation;
     const response = yield (0, opportunities_service_1.getOpportunitiesService)(keyTypeJob, keyTypeEngineering, jobLocation);
-    res.status(response.statusCode).json(response.body);
+    //    res.status(response.statusCode).json(response.body);
+    if (response.statusCode === 204) {
+        res.status(204).send(null); // força enviar null
+    }
+    else {
+        res.status(response.statusCode).json(response.body);
+    }
 });
 exports.getOpportunities = getOpportunities;
 const postOpportunity = (req, res) => __awaiter(void 0, void 0, void 0, function* () {

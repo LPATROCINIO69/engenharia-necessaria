@@ -2,9 +2,11 @@ import mongoose from "mongoose";
 import  Engineering from "../models/engineering-schema";
 import { FieldEngineering } from "../domain/enums/fieldEngineering";
 
+
 async function seedEngineering() {
   try {
-    await mongoose.connect("mongodb://localhost:27017/engenhariaopportunity"); // ajuste a URL
+//    await mongoose.connect("mongodb://localhost:27017/engenhariaopportunity"); // ajuste a URL
+    await mongoose.connect(process.env.MONGO_URI || "mongodb://localhost:27017/engenhariaopportunity"); // ajuste a URL
     console.log("✅ Conectado ao MongoDB");
 
     // Converte enum para array de objetos { key, name }

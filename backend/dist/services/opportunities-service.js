@@ -58,7 +58,7 @@ const getOpportunitiesService = (keyTypeJob, keyTypeEngineering, jobLocation) =>
         typeEngineering = fieldEngineering_1.FieldEngineering[keyTypeEngineering];
     else
         typeEngineering = undefined;
-    console.log("tipo de trabalho: ", typeJob, " - tipo de engenharia: ", typeEngineering, " - Local: ", jobLocation);
+    //    console.log("tipo de trabalho: ", typeJob, " - tipo de engenharia: ", typeEngineering, " - Local: ", jobLocation);
     const data = yield (0, opportunities_repository_1.findAllOpportunities)(typeJob, typeEngineering, jobLocation);
     let response = null;
     if (data.length >= 1) {

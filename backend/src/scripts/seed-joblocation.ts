@@ -1,6 +1,8 @@
 import mongoose from "mongoose";
 import axios from "axios";
 import JobLocation from "../models/joblocation-schema";
+import { urlencoded } from "express";
+
 
 
 async function fetchCidadesDoIBGE() {
@@ -24,7 +26,8 @@ async function fetchCidadesDoIBGE() {
 
 async function seed() {
   try {
-    await mongoose.connect("mongodb://localhost:27017/engenhariaopportunity"); // troque seu banco
+    await mongoose.connect(process.env.MONGO_URI || "mongodb://localhost:27017/engenhariaopportunity"); // ajuste a URL
+//    await mongoose.connect("mongodb://localhost:27017/engenhariaopportunity"); // troque seu banco
     console.log("✅ Conectado ao MongoDB");
 
     console.log("📡 Baixando lista de cidades do IBGE...");

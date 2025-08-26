@@ -18,7 +18,8 @@ const fieldEngineering_1 = require("../domain/enums/fieldEngineering");
 function seedEngineering() {
     return __awaiter(this, void 0, void 0, function* () {
         try {
-            yield mongoose_1.default.connect("mongodb://localhost:27017/engenhariaopportunity"); // ajuste a URL
+            //    await mongoose.connect("mongodb://localhost:27017/engenhariaopportunity"); // ajuste a URL
+            yield mongoose_1.default.connect(process.env.MONGO_URI || "mongodb://localhost:27017/engenhariaopportunity"); // ajuste a URL
             console.log("✅ Conectado ao MongoDB");
             // Converte enum para array de objetos { key, name }
             const engineeringArray = Object.entries(fieldEngineering_1.FieldEngineering).map(([key, value]) => ({

@@ -38,5 +38,4 @@ const EngineeringSchema = new mongoose_1.Schema({
     key: { type: String, required: true, unique: true },
     name: { type: String, required: true }
 }, { collection: "engineerings" });
-EngineeringSchema.index({ key: 1 }, { unique: true });
 exports.default = mongoose_1.default.model("Engineering", EngineeringSchema);

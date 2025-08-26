@@ -25,5 +25,6 @@ const findAllOpportunities = (typeJob, typeEngineering, jobLocation) => __awaite
 exports.findAllOpportunities = findAllOpportunities;
 const insertOpportunity = (opportunityData) => __awaiter(void 0, void 0, void 0, function* () {
     const newOpportunity = yield opportunity_schema_1.OpportunityModel.create(opportunityData);
+    return newOpportunity;
 });
 exports.insertOpportunity = insertOpportunity;
