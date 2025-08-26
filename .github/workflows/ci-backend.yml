@@ -15,7 +15,7 @@ jobs:
 
     strategy:
       matrix:
-        node-version: [18.x]
+        node-version: [20.x]
 
     steps:
       # 1️⃣ clonar o repositório
@@ -38,12 +38,12 @@ jobs:
       # 4️⃣ Build do backend
       - name: Build Backend
         working-directory: ./backend
-        run: npx tsc 
+        run: npm run dist 
 
       # 5️⃣ Executar os testes do backend
       - name: Run Backend Tests
         working-directory: ./backend
-        run: npm test -- --coverage
+        run: npm run test:build && npm test -- --coverage
 
       # 6️⃣ Gera relatório coverage e faz upload como artefato
       - name: Upload Test Coverage
