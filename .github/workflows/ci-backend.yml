@@ -104,7 +104,7 @@ jobs:
             --allow-unauthenticated \
             --memory 512Mi \
             --cpu 1 \
-            --service-account="engenharia-necessaria@references-yen-415813.iam.gserviceaccount.com" \
+            --service-account="engenharia-necessaria@reference-yen-415813.iam.gserviceaccount.com" \
             --set-env-vars=NODE_ENV=production \
             --update-secrets=DATABASE_URL=DB_SECRET:latest \
             --quiet
