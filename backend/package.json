@@ -14,7 +14,7 @@
     "start:watch": "tsx watch --env-file=.env ./src/server.ts",
     "dist": "npx tsc",
     "test:build": "tsc -p tsconfig.tests.json",
-    "start:dist": "npm run dist && node .src/dist/index.js",
+    "start:dist": "npm run dist && node ./dist/server.js",
     "test": "jest"
   },
   "keywords": [],
