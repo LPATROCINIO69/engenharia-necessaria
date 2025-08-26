@@ -1,4 +1,4 @@
-name: CI Backend
+name: CI/CD Backend
 
 on:
   push:
@@ -52,3 +52,72 @@ jobs:
         with:
           name: backend-coverage
           path: ./backend/coverage
+
+  # NOVO JOB: DEPLOY PARA GCP
+  deploy-to-gcp:
+    name: Deploy to Google Cloud Run
+    runs-on: ubuntu-latest
+    needs: build-and-test-backend
+    # Executa apenas no push para main (não em PRs)
+    if: github.ref == 'refs/heads/main' && github.event_name == 'push'
+    
+    steps:
+      # 1️⃣ Clonar repositório
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      # 2️⃣ Autenticação no GCP
+      - name: Authenticate to Google Cloud
+        uses: google-github-actions/auth@v1
+        with:
+          credentials_json: '${{ secrets.GCP_SERVICE_ACCOUNT_KEY }}'
+
+      # 3️⃣ Setup do Google Cloud SDK
+      - name: Set up Google Cloud SDK
+        uses: google-github-actions/setup-gcloud@v1
+        with:
+          project_id: '${{ secrets.GCP_PROJECT_ID }}'
+
+      # 4️⃣ Configurar Docker para Google Container Registry
+      - name: Configure Docker for GCR
+        run: gcloud auth configure-docker --quiet
+
+      # 5️⃣ Entrar na pasta backend e construir imagem Docker
+      - name: Build Docker image
+        working-directory: ./backend
+        run: |
+          docker build -t gcr.io/${{ secrets.GCP_PROJECT_ID }}/backend-api:${{ github.sha }} .
+
+      # 6️⃣ Fazer push da imagem para Google Container Registry
+      - name: Push Docker image to GCR
+        working-directory: ./backend
+        run: |
+          docker push gcr.io/${{ secrets.GCP_PROJECT_ID }}/backend-api:${{ github.sha }}
+
+      # 7️⃣ Deploy no Google Cloud Run
+      - name: Deploy to Cloud Run
+        run: |
+          gcloud run deploy backend-api \
+            --image gcr.io/${{ secrets.GCP_PROJECT_ID }}/backend-api:${{ github.sha }} \
+            --region southamerica-east1 \
+            --platform managed \
+            --allow-unauthenticated \
+            --memory 512Mi \
+            --cpu 1 \
+            --set-env-vars=NODE_ENV=production \
+            --update-secrets=DATABASE_URL=DB_SECRET:latest \
+            --quiet
+
+      # 8️⃣ Obter URL do serviço deployado
+      - name: Get Service URL
+        run: |
+          URL=$(gcloud run services describe backend-api --region southamerica-east1 --format='value(status.url)')
+          echo "🚀 Service deployed successfully: $URL"
+          echo "SERVICE_URL=$URL" >> $GITHUB_ENV
+
+      # 9️⃣ (Opcional) Postar URL no summary
+      - name: Update GitHub Summary
+        run: |
+          echo "### 🚀 Backend Deployed Successfully" >> $GITHUB_STEP_SUMMARY
+          echo "**Service URL:** ${{ env.SERVICE_URL }}" >> $GITHUB_STEP_SUMMARY
+          echo "**Deploy Time:** $(date)" >> $GITHUB_STEP_SUMMARY
