@@ -77,6 +77,10 @@ jobs:
         uses: google-github-actions/setup-gcloud@v1
         with:
           project_id: '${{ secrets.GCP_PROJECT_ID }}'
+      
+      # Atualiza o gcloud
+      - name: Update gcloud components
+        run: gcloud components update --quiet
 
       # 4️⃣ Configurar Docker para Google Container Registry
       - name: Configure Docker for GCR
@@ -106,7 +110,7 @@ jobs:
             --cpu 1 \
             --timeout=300s \  
             --service-account="engenharia-necessaria@reference-yen-415813.iam.gserviceaccount.com" \
-            --update-secrets=DATABASE_URL=MONGO_URI:latest \
+            --set-secrets=DATABASE_URL=MONGO_URI:latest \
             --quiet
 
       # 8️⃣ Obter URL do serviço deployado
