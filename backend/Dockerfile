@@ -23,4 +23,4 @@ ENV NODE_ENV=production
 
 
 # 7️⃣ ✅ Comando que usa os arquivos da pasta dist
-CMD ["node", "dist/index.js"]  # Ajuste para seu entrypoint
+CMD ["node", "dist/server.js"]  # Ajuste para seu entrypoint
