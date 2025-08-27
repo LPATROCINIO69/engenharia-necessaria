@@ -110,7 +110,7 @@ jobs:
             --cpu 1 \
             --timeout=300s \
             --service-account="engenharia-necessaria@reference-yen-415813.iam.gserviceaccount.com" \
-            --set-secrets=MONGO_URI=MONGO_URI:latest
+            --set-secrets=MONGO_URI=MONGO_URI:latest \
             --quiet
 
       # 8️⃣ Obter URL do serviço deployado
