@@ -104,6 +104,8 @@ jobs:
             --allow-unauthenticated \
             --memory 512Mi \
             --cpu 1 \
+            --timeout=300s \  # ↑ Aumentar para 300 segundos
+            --health-check-timeout=300s \  # ↑ Timeout do health check
             --service-account="engenharia-necessaria@reference-yen-415813.iam.gserviceaccount.com" \
             --update-secrets=DATABASE_URL=MONGO_URI:latest \
             --quiet

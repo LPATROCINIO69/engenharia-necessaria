@@ -5,7 +5,7 @@ import { connectDatabase } from "./config/database";
 dotenv.config();
 
 const app = createApp();
-const port = parseInt(process.env.PORT || '3000', 10);
+const port = parseInt(process.env.PORT || '8080', 10);
 
 connectDatabase().then(() => {
   app.listen(port, '0.0.0.0', () => {
