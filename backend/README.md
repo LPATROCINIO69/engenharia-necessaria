@@ -84,7 +84,7 @@ Os endpoints utilizados para acessar as funcionalidades da API podem ser visuali
 | ---------- | ------------------------ | ------------------------------------------------------------ | -------- | ----------------------------------------------------------------- |
 | **POST**   | `/api/users/register`    | `{ name, email, password }`                                  | `body`   | Cadastra um novo usuário.                                         |
 | **POST**   | `/api/users/login`       | `{ email, password }`                                        | `body`   | Autentica o usuário e retorna um token JWT.                       |
-| **GET**    | `/api/opportunities`     | `?tipoEngenharia=...&tipoTrabalho=...&estado=...&cidade=...` | `query`  | Lista oportunidades, com filtros opcionais.                       |
+| **GET**    | `/api/opportunities`     | `?typeEngineering=...&typeJob=...&jobLocation=...          ` | `query`  | Lista oportunidades, com filtros opcionais.                       |
 | **GET**    | `/api/opportunities/:id` | `id` (identificador da vaga)                                 | `params` | Retorna detalhes de uma oportunidade específica.                  |
 | **POST**   | `/api/opportunities`     | `{ titulo, empresa, local, requisitos, beneficios, fonte }`  | `body`   | Cadastra manualmente uma nova oportunidade (usuário autenticado). |
 | **DELETE** | `/api/opportunities/:id` | `id` (identificador da vaga)                                 | `params` | Remove oportunidade cadastrada pelo usuário (quando autorizado).  |
@@ -150,5 +150,12 @@ Guarda a listagem de mais de 5000 cidades integrantes do Brasil. Contém além d
 | codigoIbge | number | Sim | 1100015 |
 | __v | number | Sim | 0 |
 
+### Conexão com a api instalada no GCP (Google Cloud Plataform)
+A API encontra-se instalada no Google Cloud Run e pode ser acessada por meio da URL: https://backend-api-tirli26jdq-rj.a.run.app.
+Para acessar os diversos serviços, basta unir a url aos endpoints, por exemplo, para acessar vaga do tipo "Engenharia Mecanica", basta colocar:
+https://backend-api-tirli26jdq-rj.a.run.app/api/opportunities?typeEngineering=Mecanica
 
+
+
+ 
   
