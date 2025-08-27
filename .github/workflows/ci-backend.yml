@@ -108,7 +108,7 @@ jobs:
             --allow-unauthenticated \
             --memory 512Mi \
             --cpu 1 \
-            --timeout=300s \  
+            --timeout=300s \
             --service-account="engenharia-necessaria@reference-yen-415813.iam.gserviceaccount.com" \
             --set-secrets=DATABASE_URL=MONGO_URI:latest \
             --quiet
