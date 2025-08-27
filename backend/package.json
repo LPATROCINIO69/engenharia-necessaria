@@ -4,7 +4,7 @@
   "description": "",
   "license": "ISC",
   "author": "",
-  "main": "index.ts",
+  "main": "server.ts",
   "scripts": {
     "start:dev": "tsx --env-file=.env ./src/server.ts",
     "start:seedJobLocation": "tsx --env-file=.env_dev ./src/scripts/seed-joblocation.ts",
