@@ -20,7 +20,7 @@ EXPOSE 8080
 
 # 6️⃣ Variáveis de ambiente
 ENV NODE_ENV=production
-ENV PORT=8080
+
 
 # 7️⃣ ✅ Comando que usa os arquivos da pasta dist
 CMD ["node", "dist/index.js"]  # Ajuste para seu entrypoint
