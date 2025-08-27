@@ -104,6 +104,7 @@ jobs:
           gcloud run deploy backend-api \
             --image gcr.io/${{ secrets.GCP_PROJECT_ID }}/backend-api:${{ github.sha }} \
             --region southamerica-east1 \
+            --vpc-connector cloud-run-connector \
             --platform managed \
             --allow-unauthenticated \
             --memory 512Mi \
