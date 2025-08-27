@@ -15,8 +15,8 @@ COPY dist/ ./dist/
 RUN test -f ./dist/server.js || (echo "❌ server.js não encontrado" && exit 1)
 
 # 4️⃣ Copiar outros arquivos necessários (se houver)
-COPY public/ ./public/
-COPY config/ ./config/
+# COPY public/ ./public/
+# COPY config/ ./config/
  
 # 5️⃣ Expor a porta que o GCP espera
 EXPOSE 8080
