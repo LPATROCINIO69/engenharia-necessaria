@@ -105,6 +105,7 @@ jobs:
             --image gcr.io/${{ secrets.GCP_PROJECT_ID }}/backend-api:${{ github.sha }} \
             --region southamerica-east1 \
             --vpc-connector cloud-run-connector \
+            --egress-settings=all \
             --platform managed \
             --allow-unauthenticated \
             --memory 512Mi \
