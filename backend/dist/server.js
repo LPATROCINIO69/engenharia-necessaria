@@ -8,10 +8,10 @@ const dotenv_1 = __importDefault(require("dotenv"));
 const database_1 = require("./config/database");
 dotenv_1.default.config();
 const app = (0, app_1.default)();
-const port = process.env.PORT || 3000;
+const port = parseInt(process.env.PORT || '3000', 10);
 (0, database_1.connectDatabase)().then(() => {
-    app.listen(port, () => {
-        console.log(`✅ Server rodando em http://localhost:${port}`);
+    app.listen(port, '0.0.0.0', () => {
+        console.log(`✅ Server rodando em ${port}`);
     });
 }).catch((error) => {
     console.error("❌ Falha ao conectar ao banco de dados:", error);
