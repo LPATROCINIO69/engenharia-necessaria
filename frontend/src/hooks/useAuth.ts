@@ -11,7 +11,7 @@ export const useAuth = () => {
     const handleRegister = async (userData: UserRegistrationData) => {
         setLoading(true);
         setError('');
-        
+        console.log(userData);
         const result = await authService.register(userData);
         
         setLoading(false);
