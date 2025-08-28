@@ -20,3 +20,4 @@ jobs:
           repoToken: ${{ secrets.GITHUB_TOKEN }}
           firebaseServiceAccount: ${{ secrets.FIREBASE_SERVICE_ACCOUNT_REFERENCE_YEN_415813 }}
           projectId: reference-yen-415813
+          entryPoint: ./frontend
