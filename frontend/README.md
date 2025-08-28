@@ -80,3 +80,6 @@ As instruções de execução podem ser feitas por meio dos seguintes comandos n
 | `npm run preview`         | Executa a versão de produção gerada pelo `build` em um servidor local.   |
 | `npm run lint`            | Executa o ESLint para analisar e validar o código conforme as regras definidas. |
 
+
+## Acesso ao aplicativo frontend do ENGENHARIA NECESSARIA armazenado no GPC-FIREBASE
+O acesso ao frontend é feito pelo hyperlink: https://reference-yen-415813.web.app/
