@@ -17,5 +17,6 @@ jobs:
         with:
           repoToken: ${{ secrets.GITHUB_TOKEN }}
           firebaseServiceAccount: ${{ secrets.FIREBASE_SERVICE_ACCOUNT_REFERENCE_YEN_415813 }}
+          entryPoint: ./frontend
           channelId: live
           projectId: reference-yen-415813
